@@ -21,7 +21,7 @@
           style="clip-path: polygon(0 0, 100% 0, 50% 50%)"
         ></div>
         <img
-          src="C:\Users\tunza\Documents\jew-web\public\499739564_122232150404179407_2509833584844019209_n.jpg"
+          src="/499739564_122232150404179407_2509833584844019209_n.jpg"
           class="absolute top-2 left-2 w-[calc(100%-1rem)] h-[calc(100%-1rem)] object-cover rounded shadow"
         />
       </div>
