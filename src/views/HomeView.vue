@@ -1,36 +1,71 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-blue-50">
-    <div @click="openLetter = true" class="relative w-96 h-96 cursor-pointer group">
-      <!-- ซองจดหมาย (ปิด) -->
-      <div
-        v-if="!openLetter"
-        class="w-full h-full bg-white border-2 border-gray-300 relative overflow-hidden shadow-lg"
-      >
-        <!-- ฝาพับสามเหลี่ยม -->
-        <div
-          class="absolute top-0 left-0 w-full h-full bg-white border-b-2 border-gray-300"
-          style="clip-path: polygon(0 0, 100% 0, 50% 50%)"
-        ></div>
-        <div class="absolute bottom-0 left-0 w-full text-center p-2 text-gray-500">Click to open</div>
-      </div>
+  <div class="bg-blue-400 h-screen flex items-center justify-center text-5xl flex-col">
+    <button @click="toggleTyping" class="px-4 py-2 bg-pink-500 text-white rounded mb-4">
+      {{ hasTyped ? 'ลบข้อความ' : 'พิมพ์ข้อความ' }}
+    </button>
 
-      <!-- จดหมายเปิด -->
-      <div v-else class="w-full h-full bg-white border-2 border-gray-300 relative shadow-xl">
-        <div
-          class="absolute top-0 left-0 w-full h-full bg-white"
-          style="clip-path: polygon(0 0, 100% 0, 50% 50%)"
-        ></div>
-        <img
-          src="/499739564_122232150404179407_2509833584844019209_n.jpg"
-          class="absolute top-2 left-2 w-[calc(100%-1rem)] h-[calc(100%-1rem)] object-cover rounded shadow"
-        />
+    <div class="flex gap-2 items-center">
+      <h1 id="typewriter" class="text-7xl font-bold mt-10 text-center"></h1>
+
+      <div class="w-28 h-28 rounded-full overflow-hidden">
+        <img src="/499739564_122232150404179407_2509833584844019209_n.jpg" alt="jew" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import TypeIt from "typeit";
+import { ref, nextTick } from "vue";
 
-const openLetter = ref(false)
+const hasTyped = ref(false);
+let instance: TypeIt | null = null;
+
+const toggleTyping = async () => {
+  if (!hasTyped.value) {
+    hasTyped.value = true;
+
+    // รอ DOM render ก่อนสร้าง TypeIt
+    await nextTick();
+
+    instance = new TypeIt("#typewriter", {
+      speed: 80,
+      cursor: true,
+      afterComplete: () => {
+        const cursor = document.querySelector(".ti-cursor") as HTMLElement;
+        if (cursor) {
+          cursor.classList.add("fade-out-cursor");
+        }
+      },
+    })
+      .type("Happy birthday to Jew BNK48")
+      .go();
+  } else {
+    hasTyped.value = false;
+
+    if (instance) {
+      instance.destroy();
+      instance = null;
+    }
+
+    const el = document.getElementById("typewriter");
+    if (el) el.innerHTML = "";
+  }
+};
 </script>
+
+<style>
+.fade-out-cursor {
+  animation: fadeOut 1s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+</style>
