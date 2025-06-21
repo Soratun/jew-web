@@ -1,12 +1,25 @@
 <template>
-  <div class="bg-blue-400 h-screen flex items-center justify-center text-5xl flex-col">
-    <button class="bg-white px-4 py-2 mb-4 rounded" @click="eventIsOpen">
-      กด
+  <div class="bg-blue-400 h-screen flex items-center justify-center text-5xl flex-col relative">
+    <button class="bg-white px-4 py-2 mb-6 rounded" @click="eventIsOpen">
+      {{ isOpen ? 'ปิด' : 'เปิดจดหมาย' }}
     </button>
 
-    <div v-if="isOpen" id="envelope-open">
+    <div class="relative w-48 h-48">
+      <!-- กระดาษ -->
+      <div
+        v-if="isOpen"
+        class="absolute bottom-14 w-fit h-fit text-center bg-white text-black text-base p-4 rounded shadow-md animate-slide-up z-10 top-0 left-1 transform translate-x-1/2 flex flex-col items-center"
+      >
+        สวัสดี Jew BNK48 🎉<br />
+        สุขสันต์วันเกิดนะ!
+        <div class="w-28 h-28 rounded-full overflow-hidden">
+          <img src="/499739564_122232150404179407_2509833584844019209_n.jpg" alt="jew" />
+        </div>
+      </div>
+
+      <!-- ซองจดหมาย -->
       <svg
-        class="w-4xl h-4xl text-white"
+        class="absolute w-full h-full text-white z-20"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -20,22 +33,6 @@
         />
       </svg>
     </div>
-
-    <div v-else id="envelope-closed">
-      <svg
-        class="w-4xl h-4xl text-white"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="1.7"
-          d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
-        />
-      </svg>
-    </div>
   </div>
 </template>
 
@@ -44,9 +41,24 @@ import { ref } from 'vue'
 
 const isOpen = ref(false)
 
-console.log(isOpen.value)
-
-const eventIsOpen = async () => {
+const eventIsOpen = () => {
   isOpen.value = !isOpen.value
 }
 </script>
+
+<style scoped>
+@keyframes slide-up {
+  0% {
+    transform: translate(-50%, 50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -120%);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out forwards;
+}
+</style>
