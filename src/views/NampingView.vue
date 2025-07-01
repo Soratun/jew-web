@@ -43,20 +43,19 @@
       </div>
 
       <transition-group
-        name="fade"
-        tag="div"
-        v-if="opened"
-        ref="imageSection"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center mt-10 px-4"
-      >
-        <img
-          v-for="(img, index) in images"
-          :key="img"
-          :src="`/${img}`"
-          class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
-          :style="{ animationDelay: `${index * 0.4}s` }"
-        />
-      </transition-group>
+  name="fade"
+  tag="div"
+  v-if="opened"
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center mt-10 px-4"
+>
+  <img
+    v-for="(img, index) in images"
+    :key="img"
+    :src="`/${img}`"
+    class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
+    :style="{ animationDelay: `${index * 0.4}s` }"
+  />
+</transition-group>
 
       <p
         v-if="opened"
@@ -69,12 +68,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from "vue";
+import { ref, watch } from "vue";
 import { Fireworks } from "fireworks-js";
 
 const opened = ref(false);
 const fireworksContainer = ref(null);
-const imageSection = ref<HTMLElement | null>(null);
 let fireworksInstance: Fireworks | null = null;
 
 const images = [
@@ -88,33 +86,25 @@ const openGift = () => {
   opened.value = true;
 };
 
-watch(opened, async (val) => {
-  if (val) {
-    await nextTick();
+watch(opened, (val) => {
+  if (val && fireworksContainer.value) {
+    fireworksInstance = new Fireworks(fireworksContainer.value, {
+      hue: { min: 0, max: 360 },
+      rocketsPoint: { min: 0, max: 100 },
+      speed: 2,
+      acceleration: 1.05,
+      friction: 0.97,
+      gravity: 1.5,
+      particles: 100,
+      trace: 3,
+      explosion: 5,
+      autoresize: true,
+    });
+    fireworksInstance.start();
 
-    // Scroll ไปยังภาพของขวัญ
-    imageSection.value?.scrollIntoView({ behavior: "smooth" });
-
-    // ดอกไม้ไฟ
-    if (fireworksContainer.value) {
-      fireworksInstance = new Fireworks(fireworksContainer.value, {
-        hue: { min: 0, max: 360 },
-        rocketsPoint: { min: 0, max: 100 },
-        speed: 2,
-        acceleration: 1.05,
-        friction: 0.97,
-        gravity: 1.5,
-        particles: 100,
-        trace: 3,
-        explosion: 5,
-        autoresize: true,
-      });
-      fireworksInstance.start();
-
-      setTimeout(() => {
-        fireworksInstance?.stop();
-      }, 6000);
-    }
+    setTimeout(() => {
+      fireworksInstance?.stop();
+    }, 6000);
   }
 });
 </script>
