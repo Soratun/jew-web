@@ -82,9 +82,9 @@ let fireworksInstance: Fireworks | null = null;
 // รูปภาพของขวัญ
 const images = [
   "IMG20250309154601.jpg",
-  "IMG20250309155223.jpg",
   "IMG20250504195406.jpg",
   "IMG20250504195408.jpg",
+  "IMG20250531191753.jpg"
 ];
 
 // background music
