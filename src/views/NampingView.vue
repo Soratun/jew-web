@@ -9,8 +9,10 @@
         :key="n"
         class="absolute bg-white opacity-30 rounded-full animate-bubble"
         :style="{
-          width: '30px',
-          height: '30px',
+          width: '6vw',
+          height: '6vw',
+          maxWidth: '30px',
+          maxHeight: '30px',
           left: `${Math.random() * 100}%`,
           animationDelay: `${n * 3}s`,
           top: `${100 + Math.random() * 50}px`,
@@ -23,10 +25,10 @@
 
     <!-- เนื้อหาหลัก -->
     <div
-      class="relative z-10 flex flex-col items-center justify-center min-h-screen p-6 gap-7"
+      class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-6 gap-7"
     >
       <h1
-        class="text-4xl md:text-5xl font-bold text-center mb-4 select-none"
+        class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 select-none"
       >
         🎂💚 สุขสันต์วันเกิด <span class="text-green-700 font-extrabold">𝐍𝐚𝐦𝐩𝐢𝐧𝐠</span> 💚🎂
       </h1>
@@ -44,20 +46,21 @@
         name="fade"
         tag="div"
         v-if="opened"
-        class="flex flex-wrap justify-center mt-10 gap-8"
+        ref="imageSection"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center mt-10 px-4"
       >
         <img
           v-for="(img, index) in images"
           :key="img"
           :src="`/${img}`"
-          class="w-72 md:w-80 h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
+          class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
           :style="{ animationDelay: `${index * 0.4}s` }"
         />
       </transition-group>
 
       <p
         v-if="opened"
-        class="mt-6 bg-white text-center text-lg md:text-xl p-6 rounded-2xl shadow-md max-w-md animate-pulse select-none"
+        class="mt-6 bg-white text-center text-base md:text-lg p-4 md:p-6 rounded-2xl shadow-md max-w-sm sm:max-w-md animate-pulse select-none"
       >
         🐸💬 "สุขสันต์วันเกิดนะ 𝐍𝐚𝐦𝐩𝐢𝐧𝐠 ขอให้วันนี้เป็นวันพิเศษที่อบอุ่นที่สุดเลย!"
       </p>
@@ -66,11 +69,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, nextTick } from "vue";
 import { Fireworks } from "fireworks-js";
 
 const opened = ref(false);
 const fireworksContainer = ref(null);
+const imageSection = ref<HTMLElement | null>(null);
 let fireworksInstance: Fireworks | null = null;
 
 const images = [
@@ -84,25 +88,33 @@ const openGift = () => {
   opened.value = true;
 };
 
-watch(opened, (val) => {
-  if (val && fireworksContainer.value) {
-    fireworksInstance = new Fireworks(fireworksContainer.value, {
-      hue: { min: 0, max: 360 },
-      rocketsPoint: { min: 0, max: 100 },
-      speed: 2,
-      acceleration: 1.05,
-      friction: 0.97,
-      gravity: 1.5,
-      particles: 100,
-      trace: 3,
-      explosion: 5,
-      autoresize: true,
-    });
-    fireworksInstance.start();
+watch(opened, async (val) => {
+  if (val) {
+    await nextTick();
 
-    setTimeout(() => {
-      fireworksInstance?.stop();
-    }, 6000);
+    // Scroll ไปยังภาพของขวัญ
+    imageSection.value?.scrollIntoView({ behavior: "smooth" });
+
+    // ดอกไม้ไฟ
+    if (fireworksContainer.value) {
+      fireworksInstance = new Fireworks(fireworksContainer.value, {
+        hue: { min: 0, max: 360 },
+        rocketsPoint: { min: 0, max: 100 },
+        speed: 2,
+        acceleration: 1.05,
+        friction: 0.97,
+        gravity: 1.5,
+        particles: 100,
+        trace: 3,
+        explosion: 5,
+        autoresize: true,
+      });
+      fireworksInstance.start();
+
+      setTimeout(() => {
+        fireworksInstance?.stop();
+      }, 6000);
+    }
   }
 });
 </script>
