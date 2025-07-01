@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
+    "fireworks-js": "^2.10.8",
     "gsap": "^3.13.0",
     "pinia": "^3.0.1",
     "tailwindcss": "^4.1.10",
