@@ -72,6 +72,7 @@
 import { ref, watch, nextTick } from "vue";
 import { Fireworks } from "fireworks-js";
 import confetti from "canvas-confetti";
+import api from "@/lib/api";
 
 // states
 const opened = ref(false);
@@ -105,8 +106,10 @@ const launchConfetti = () => {
 };
 
 // เมื่อคลิกเปิดของขวัญ
-const openGift = () => {
+const openGift = async () => {
   opened.value = true;
+  const res = await api.get("/health");
+  console.log("API Response:", res);
   bgMusic.play().catch(() => {}); // บาง browser ต้องรอ interaction
   launchConfetti();
 };
@@ -121,12 +124,10 @@ watch(opened, async (val) => {
       fireworksInstance = new Fireworks(fireworksContainer.value, {
         hue: { min: 0, max: 360 },
         rocketsPoint: { min: 0, max: 100 },
-        speed: 2,
         acceleration: 1.05,
         friction: 0.97,
         gravity: 1.5,
         particles: 100,
-        trace: 3,
         explosion: 5,
         autoresize: true,
       });
