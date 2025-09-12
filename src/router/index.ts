@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import NampingView from '@/views/NampingView.vue'
+// import NampingView from '@/views/NampingView.vue'
 import TemplateView from '@/views/TemplateView.vue'
+import BirthdayView from '@/views/BirthdayView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,12 +9,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: NampingView,
+      component: TemplateView,
     },
     {
       path: '/template',
       name: 'template',
       component: TemplateView,
+    },
+    {
+      path: '/birthday',
+      name: 'birthday',
+      component: BirthdayView,
     },
   ],
 })

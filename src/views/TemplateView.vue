@@ -73,6 +73,9 @@ import { useLocalStorage } from '@vueuse/core'
 import { del, get, keys, set } from 'idb-keyval';
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const MAX = 4;
 
@@ -125,6 +128,7 @@ const submit = async () => {
   console.log('Files:', images.value);
   await persistImages()
   console.log('Saved to device: name(localStorage), images(IndexedDB)')
+  router.push({ name: 'birthday' })
 };
 
 onMounted(async () => {
