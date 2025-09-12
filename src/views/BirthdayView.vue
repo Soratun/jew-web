@@ -30,7 +30,7 @@
       </h1>
 
       <div v-if="!opened" class="text-7xl animate-bounce cursor-pointer select-none" @click="openGift">
-        <p class="text-center">🐸</p>
+        <p class="text-center">🎂</p>
         <p class="text-base text-gray-800 mt-2">คลิกเพื่อเปิดของขวัญ</p>
       </div>
 
