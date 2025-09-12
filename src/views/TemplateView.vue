@@ -43,7 +43,7 @@
           <img
             :src="src"
             alt="preview"
-            class="w-24 h-24 object-cover rounded-md border border-gray-300"
+            class="w-56 object-cover rounded-md border border-gray-300"
           />
           <button
             class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-black/70 text-white text-xs"
