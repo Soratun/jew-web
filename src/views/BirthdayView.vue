@@ -52,7 +52,7 @@
       </transition-group>
 
       <p v-if="opened" class="mt-6 bg-white text-center text-base md:text-lg p-4 md:p-6 rounded-2xl shadow-md max-w-sm sm:max-w-md animate-pulse select-none">
-        🐸💬 "สุขสันต์วันเกิดนะ {{ displayName }} ขอให้วันนี้เป็นวันพิเศษที่อบอุ่นที่สุดเลย!"
+        💬 "สุขสันต์วันเกิดนะ {{ displayName }} ขอให้วันนี้เป็นวันพิเศษที่อบอุ่นที่สุดเลย!"
       </p>
     </div>
   </div>
