@@ -69,11 +69,14 @@
 </template>
 
 <script setup lang="ts">
+import { useLocalStorage } from '@vueuse/core'
+import { del, get, keys, set } from 'idb-keyval';
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { onMounted } from 'vue'
 
 const MAX = 4;
 
-const name = ref('')
+const name = useLocalStorage<string>('birthday:name', '')
 const images = ref<File[]>([])
 const errorMsg = ref<string>('');
 
@@ -117,10 +120,34 @@ const removeAt = (i: number) => {
   images.value = copy;
 };
 
-const submit = () => {
+const submit = async () => {
   console.log('Name:', name.value);
   console.log('Files:', images.value);
+  await persistImages()
+  console.log('Saved to device: name(localStorage), images(IndexedDB)')
 };
+
+onMounted(async () => {
+  const allKeys = await keys() as string[]
+  const myKeys = allKeys.filter(k => k.startsWith('birthday:image:'))
+  const blobs = await Promise.all(myKeys.map(k => get(k))) as Blob[]
+
+  images.value = blobs.map((b, i) =>
+    new File([b], `image-${i + 1}.png`, { type: b.type || 'image/png' })
+  )
+})
+
+const persistImages = async () => {
+  const allKeys = await keys() as string[]
+  await Promise.all(
+    allKeys
+      .filter(k => k.startsWith('birthday:image:'))
+      .map(k => del(k))
+  )
+  await Promise.all(
+    images.value.map((f, idx) => set(`birthday:image:${idx}`, f))
+  )
+}
 </script>
 
 <style>
