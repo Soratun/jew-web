@@ -22,6 +22,11 @@ const router = createRouter({
       name: 'birthday',
       component: BirthdayView,
     },
+    {
+      path: '/meibirthday',
+      name: 'meibirthday',
+      component: MeiView,
+    },
   ],
 })
 
