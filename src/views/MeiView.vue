@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative min-h-screen bg-gradient-to-b from-sky-100 via-teal-50 to-emerald-100 overflow-hidden font-itim text-gray-900"
+    class="min-h-screen bg-gradient-to-r from-sky-200 via-teal-100 to-emerald-200 animate-gradient"
   >
     <!-- ฟองลอย (bubbles) -->
     <div class="absolute inset-0 pointer-events-none">
@@ -28,10 +28,7 @@
       class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-6 gap-7"
     >
       <transition name="fade">
-        <div
-          v-if="!opened"
-          class="mt-10 px-4"
-        >
+        <div v-if="!opened" class="mt-10 px-4">
           <img
             src="/mei/541489827_1428819765276156_6743932941503854935_n.jpg"
             class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
@@ -40,8 +37,16 @@
         </div>
       </transition>
 
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 select-none">
-        🎂🩵 สุขสันต์วันเกิด <span class="text-sky-600 font-extrabold">Mei</span> 🩵🎂
+      <h1
+        class="font-itim text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 select-none animate-bounce"
+      >
+        🎂🩵 สุขสันต์วันเกิด
+        <span
+          class="font-itim bg-gradient-to-r from-blue-700 via-sky-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg"
+        >
+          Mei</span
+        >
+        🩵🎂
       </h1>
 
       <div
@@ -71,9 +76,10 @@
 
       <p
         v-if="opened"
-        class="mt-6 bg-white text-center text-base md:text-lg p-4 md:p-6 rounded-2xl shadow-md max-w-sm sm:max-w-md animate-pulse select-none"
+        class="font-itim mt-6 bg-white text-center text-base md:text-lg p-4 md:p-6 rounded-2xl shadow-md max-w-sm sm:max-w-md animate-pulse select-none"
       >
-       🏀💬 "สุขสันต์วันเกิดนะ Mei 🎂 ขอให้ปีนี้เต็มไปด้วยรอยยิ้ม ความสุข และก้าวสู่ความสำเร็จในทุกสิ่งที่ตั้งใจไว้ ทั้งเรื่องเรียนและสิ่งที่รักนะครับ"
+        🏀💬 "สุขสันต์วันเกิดนะ Mei 🎂 ขอให้ปีนี้เต็มไปด้วยรอยยิ้ม ความสุข
+        และก้าวสู่ความสำเร็จในทุกสิ่งที่ตั้งใจไว้ ทั้งเรื่องเรียนและสิ่งที่รักนะครับ"
       </p>
 
       <transition-group
@@ -207,5 +213,20 @@ watch(opened, async (val) => {
 }
 .animate-bubble {
   animation: bubble 12s linear infinite;
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
 }
 </style>
