@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // import NampingView from '@/views/NampingView.vue'
 import TemplateView from '@/views/TemplateView.vue'
 import BirthdayView from '@/views/BirthdayView.vue'
+import MeiView from '@/views/MeiView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -9,7 +10,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TemplateView,
+      component: MeiView,
     },
     {
       path: '/template',
