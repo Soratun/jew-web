@@ -31,6 +31,8 @@ import AppCard from '@/components/AppCard.vue'
 import api from '@/lib/api'
 import { onMounted, ref } from 'vue'
 
+console.log('VITE_API_BASE =', import.meta.env?.VITE_API_BASE)
+
 interface BirthdayItem {
   id?: number | string
   formalDisplayName: string
