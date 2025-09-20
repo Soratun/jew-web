@@ -105,7 +105,7 @@
 import { ref, watch, nextTick } from 'vue'
 import { Fireworks } from 'fireworks-js'
 import confetti from 'canvas-confetti'
-// import api from "@/lib/api";
+import api from '@/lib/api'
 
 // states
 const opened = ref(false)
@@ -148,8 +148,8 @@ const launchConfetti = () => {
 // เมื่อคลิกเปิดของขวัญ
 const openGift = async () => {
   opened.value = true
-  // const res = await api.get("/health");
-  // console.log("API Response:", res);
+  const res = await api.get("/health");
+  console.log("API Response:", res);
   bgMusic.play().catch(() => {}) // บาง browser ต้องรอ interaction
   launchConfetti()
 }
