@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-
-onMounted(() => {
-  document.title = "สุขสันต์วันเกิด Mei 🎂";
-});
 </script>
 
 <template>
