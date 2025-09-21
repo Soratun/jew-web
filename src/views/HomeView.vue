@@ -4,37 +4,35 @@
       <h1 class="text-4xl font-bold text-center pt-12 pb-7">วันเกิดประจำเดือนนี้</h1>
       <div class="flex flex-row items-center justify-center">
         <div v-for="(item, index) in res" :key="item.id || index">
-          <!-- <AppCard
+          <AppCard
             v-if="isCurrentMonth(item.birthdate)"
             :name="item.formalDisplayName"
             :birthdate="item.birthdate"
             :generation="item.generation || ''"
             :brand="item.brand || ''"
             :team="item.team || ''"
-          /> -->
-          <AppCard
+          />
+          <!-- <AppCard
             :name="item.formalDisplayName"
             :birthdate="item.birthdate"
             :generation="item.generation || ''"
             :brand="item.brand || ''"
             :team="item.team || ''"
-          />
+          /> -->
         </div>
-        <!-- <div v-if="!res.some((item) => isCurrentMonth(item.birthdate))">ไม่มีวันเกิดในเดือนนี้</div> -->
+        <div v-if="!res.some((item) => isCurrentMonth(item.birthdate))">ไม่มีวันเกิดในเดือนนี้</div>
       </div>
     </div>
 
     <div>
-      <h1 class="text-4xl font-bold text-center pt-12 pb-7">ปฎิทินกิจกรรม</h1>
-      <div class="flex flex-col items-center justify-center space-y-6">
-        <div class="text-center text-lg text-gray-600">กำลังพัฒนา...</div>
-      </div>
+      <CalendarEvent />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import AppCard from '@/components/AppCard.vue'
+import AppCard from '@/components/BirthdateCard.vue'
+import CalendarEvent from '@/components/CalendarEvent.vue'
 import api from '@/lib/api'
 import { onMounted, ref } from 'vue'
 
