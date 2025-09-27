@@ -15,7 +15,7 @@
       <p><span class="font-semibold">Team:</span> {{ team || '—' }}</p>
     </div>
 
-    <div class="flex items-center justify-center gap-4 mt-4">
+    <div v-if="today < new Date(birthdate)" class="flex items-center justify-center gap-4 mt-4">
       <div
         class="flex flex-col items-center rounded-lg px-3 py-2 shadow"
         :class="countdownBrandClass(brand)"
@@ -74,7 +74,7 @@
         <p><span class="font-semibold">Team:</span> {{ team || '—' }}</p>
       </div>
 
-      <div class="flex items-center justify-center gap-4 mt-4">
+      <div v-if="today < new Date(birthdate)" class="flex items-center justify-center gap-4 mt-4">
         <div
           class="flex flex-col items-center rounded-lg px-3 py-2 shadow"
           :class="countdownBrandClass(brand)"
@@ -127,6 +127,7 @@ const props = withDefaults(
   },
 )
 
+const today = new Date()
 const open = ref(false)
 
 function cardBrandClass(brand?: string) {
@@ -143,10 +144,8 @@ function cardBrandClass(brand?: string) {
 function countdownBrandClass(brand?: string) {
   switch (brand) {
     case 'BNK48':
-      // ชมพู-ม่วง
       return 'bg-gradient-to-r from-pink-500 to-violet-600 text-white'
     case 'CGM48':
-      // เขียว-ฟ้า
       return 'bg-gradient-to-r from-emerald-500 to-cyan-600 text-white'
     default:
       return 'bg-gray-700 text-white'

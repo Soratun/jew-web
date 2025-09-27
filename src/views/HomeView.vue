@@ -5,26 +5,17 @@
       <div class="flex flex-row items-center justify-center">
         <div v-for="(item, index) in res" :key="item.id || index">
           <AppCard
-            v-if="isCurrentMonth(item.birthdate)"
             :name="item.formalDisplayName"
             :birthdate="item.birthdate"
             :generation="item.generation || ''"
             :brand="item.brand || ''"
             :team="item.team || ''"
           />
-          <!-- <AppCard
-            :name="item.formalDisplayName"
-            :birthdate="item.birthdate"
-            :generation="item.generation || ''"
-            :brand="item.brand || ''"
-            :team="item.team || ''"
-          /> -->
         </div>
-        <div v-if="!res.some((item) => isCurrentMonth(item.birthdate))">ไม่มีวันเกิดในเดือนนี้</div>
       </div>
     </div>
 
-    <div>
+    <div class="mt-10">
       <CalendarEvent />
     </div>
   </div>
@@ -50,13 +41,6 @@ interface BirthdayItem {
 
 const res = ref<BirthdayItem[]>([])
 
-const isCurrentMonth = (dateStr: string): boolean => {
-  const date = new Date(dateStr)
-  if (Number.isNaN(date.getTime())) return false
-
-  const now = new Date()
-  return date.getMonth() === now.getMonth() && date.getDay() === now.getDate()
-}
 
 onMounted(async () => {
   document.title = "home";
