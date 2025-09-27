@@ -1,159 +1,189 @@
 <template>
-  <div class="bg-white min-h-screen">
-    <h1 class="text-3xl font-bold underline text-center pt-10">Template View</h1>
-
-    <div class="flex flex-col items-center justify-center pt-10">
-      <p class="text-lg p-3 font-itim">กรอกชื่อที่ต้องการสุขสันต์วันเกิด</p>
-      <input
-        type="text"
-        v-model="name"
-        placeholder="Enter something"
-        class="border border-gray-300 rounded-md p-2 w-64 mb-4"
-      />
-    </div>
-
-    <p class="text-lg p-3 font-itim text-center">
-      ตัวอย่างข้อความที่กรอก : 🎂 สุขสันต์วันเกิด
-      <span class="text-green-700 font-extrabold">{{ name || '{ชื่อ}' }}</span> 🎂
-    </p>
-
-    <div class="flex flex-col items-center justify-center pt-2">
-      <p class="text-lg p-3 font-itim">เพิ่มรูปภาพ สูงสุด {{ MAX }} รูป</p>
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        @change="handleFileUpload"
-        class="border border-gray-300 rounded-md p-2 w-64 mb-2"
-      />
-      <p v-if="errorMsg" class="text-sm text-red-600">{{ errorMsg }}</p>
-      <p class="text-sm text-gray-500">
-        เลือกได้อีก {{ Math.max(0, MAX - images.length) }} รูป
-      </p>
-    </div>
-
-    <div>
-      <p class="text-lg p-3 font-itim text-center">ตัวอย่างรูปภาพที่เพิ่ม :</p>
-      <div class="flex justify-center gap-4 flex-wrap px-4">
-        <div
-          v-for="(src, i) in objectUrls"
-          :key="i"
-          class="relative"
-        >
-          <img
-            :src="src"
-            alt="preview"
-            class="w-56 object-cover rounded-md border border-gray-300"
-          />
-          <button
-            class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-black/70 text-white text-xs"
-            @click="removeAt(i)"
-            title="ลบรูปนี้"
-          >
-            ×
-          </button>
-        </div>
+  <div class="min-h-screen bg-gradient-to-b from-green-50 via-pink-50 to-yellow-50">
+    <!-- Header -->
+    <header class="border-b border-black/5 bg-white/70 backdrop-blur-md">
+      <div class="mx-auto max-w-6xl px-5 py-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold tracking-tight">🎂 Template Builder</h1>
       </div>
-    </div>
+    </header>
 
-    <div class="flex flex-col items-center justify-center pt-10">
-      <button
-        @click="submit"
-        :disabled="images.length === 0"
-        class="bg-blue-500 disabled:opacity-50 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-      >
-        Submit
-      </button>
-    </div>
+    <!-- Body -->
+    <main class="mx-auto max-w-6xl px-5 py-8">
+      <!-- Title -->
+      <section class="mb-6">
+        <label class="block mb-2 text-base font-medium text-gray-800">กรอกชื่อเรื่อง</label>
+        <input
+          v-model="title"
+          type="text"
+          placeholder="เช่น Happy Birthday"
+          class="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+        />
+      </section>
+
+      <!-- Two columns: Form | Preview -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <!-- Left: Form card -->
+        <section class="rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+          <div class="p-5 border-b border-gray-100">
+            <h2 class="text-lg font-semibold">ข้อมูลข้อความ</h2>
+            <p class="text-sm text-gray-500">กรอกข้อความอวยพรและชื่อ</p>
+          </div>
+          <div class="p-5 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1 text-sm font-medium text-gray-800">ข้อความ</label>
+                <input
+                  v-model="message"
+                  type="text"
+                  placeholder="เช่น สุขสันต์วันเกิด"
+                  class="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm font-medium text-gray-800">ชื่อ</label>
+                <input
+                  v-model="name"
+                  type="text"
+                  placeholder="เช่น NamPing"
+                  class="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                />
+              </div>
+            </div>
+
+            <!-- Image URLs -->
+            <div class="pt-2">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-medium text-gray-800">เพิ่มรูปภาพจาก URL</h3>
+                <button
+                  type="button"
+                  class="inline-flex items-center rounded-lg bg-emerald-600 px-3 py-1.5 text-white text-sm hover:bg-emerald-700"
+                  @click="addUrl"
+                >
+                  ➕ เพิ่ม URL
+                </button>
+              </div>
+
+              <div class="space-y-2">
+                <div v-for="(u, i) in urls" :key="i" class="flex items-center gap-2">
+                  <span class="w-6 text-xs text-gray-500 text-right">{{ i + 1 }}.</span>
+                  <input
+                    v-model="urls[i]"
+                    type="text"
+                    placeholder="วางลิงก์รูปภาพ เช่น https://…/image.webp"
+                    class="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  />
+                  <button
+                    v-if="urls.length > 1"
+                    type="button"
+                    class="rounded-lg bg-red-500 px-2.5 py-1.5 text-white text-xs hover:bg-red-600"
+                    @click="removeUrl(i)"
+                  >
+                    ลบ
+                  </button>
+                </div>
+              </div>
+
+              <!-- Mini preview of URLs -->
+              <div v-if="filteredUrls.length" class="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-2">
+                <div
+                  v-for="(src, i) in filteredUrls"
+                  :key="'thumb-' + i"
+                  class="rounded-lg overflow-hidden border border-gray-200 bg-white"
+                >
+                  <img :src="src" alt="" class="h-24 w-full object-cover" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 border-t border-gray-100 flex justify-end">
+            <button
+              type="button"
+              :disabled="!canCreate"
+              class="rounded-xl bg-black px-4 py-2 text-white text-sm hover:opacity-90 disabled:opacity-40"
+              @click="() => {}"
+            >
+              สร้าง
+            </button>
+          </div>
+        </section>
+
+        <!-- Right: Preview card (balanced) -->
+        <section class="rounded-2xl bg-white shadow-sm ring-1 ring-black/5 sticky top-4">
+          <div class="p-5 border-b border-gray-100">
+            <h2 class="text-lg font-semibold">Preview</h2>
+            <p class="text-sm text-gray-500">ตัวอย่างผลลัพธ์</p>
+          </div>
+
+          <div class="p-6 space-y-4">
+            <div class="text-center">
+              <p class="text-xs uppercase tracking-wide text-gray-500">Title</p>
+              <p class="text-xl font-semibold">{{ title || '—' }}</p>
+            </div>
+
+            <div class="rounded-xl bg-gradient-to-br from-pink-50 to-emerald-50 p-5 text-center">
+              <p class="text-2xl font-bold">
+                {{ message || 'สุขสันต์วันเกิด' }}
+                <span class="text-emerald-700 font-extrabold">{{ name || '{ชื่อ}' }}</span>
+              </p>
+            </div>
+
+            <div>
+              <p class="text-sm text-gray-500 mb-2">Images</p>
+              <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                <div
+                  v-for="(src, i) in filteredUrls"
+                  :key="'img-' + i"
+                  class="rounded-xl overflow-hidden border border-gray-200 bg-white"
+                >
+                  <div class="aspect-[4/3] bg-white/60">
+                    <img
+                      :src="src"
+                      class="w-full h-full object-cover"
+                      alt="preview"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                <!-- placeholders when empty -->
+                <template v-if="filteredUrls.length === 0">
+                  <div
+                    v-for="n in 3"
+                    :key="'ph-' + n"
+                    class="rounded-xl border border-dashed border-gray-300 bg-gray-50"
+                  >
+                    <div class="aspect-[4/3] grid place-items-center text-gray-400 text-sm">
+                      ไม่มีรูป
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
-import { del, get, keys, set } from 'idb-keyval';
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue'
 
-const router = useRouter()
+const title = ref('')
+const message = ref('')
+const name = ref('')
 
-const MAX = 4;
+const urls = ref<string[]>([''])
+const addUrl = () => urls.value.push('')
+const removeUrl = (i: number) => urls.value.splice(i, 1)
 
-const name = useLocalStorage<string>('birthday:name', '')
-const images = ref<File[]>([])
-const errorMsg = ref<string>('');
+const filteredUrls = computed(() => urls.value.map((u) => u.trim()).filter(Boolean))
 
-
-const objectUrls = computed(() => images.value.map((f) => URL.createObjectURL(f)))
-
-const handleFileUpload = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  if (!target.files) return;
-
-  const picked = Array.from(target.files);
-  const remain = MAX - images.value.length;
-
-  if (picked.length > remain) {
-    errorMsg.value = `เลือกรูปได้สูงสุด ${MAX} รูป (ตอนนี้เพิ่มได้อีก ${remain} รูป)`;
-    target.value = '';
-    return;
-  }
-
-  images.value = images.value.concat(picked);
-  errorMsg.value = '';
-  target.value = '';
-};
-
-watch(
-  images,
-  (newVal, oldVal, onCleanup) => {
-    const urlsToRevoke = oldVal?.map(f => URL.createObjectURL(f)) ?? [];
-    onCleanup(() => urlsToRevoke.forEach(u => URL.revokeObjectURL(u)));
-  },
-  { flush: 'post' }
-);
-
-onBeforeUnmount(() => {
-  objectUrls.value.forEach(u => URL.revokeObjectURL(u));
-});
-
-const removeAt = (i: number) => {
-  const copy = images.value.slice();
-  copy.splice(i, 1);
-  images.value = copy;
-};
-
-const submit = async () => {
-  console.log('Name:', name.value);
-  console.log('Files:', images.value);
-  await persistImages()
-  console.log('Saved to device: name(localStorage), images(IndexedDB)')
-  router.push({ name: 'birthday' })
-};
-
-onMounted(async () => {
-  const allKeys = await keys() as string[]
-  const myKeys = allKeys.filter(k => k.startsWith('birthday:image:'))
-  const blobs = await Promise.all(myKeys.map(k => get(k))) as Blob[]
-
-  images.value = blobs.map((b, i) =>
-    new File([b], `image-${i + 1}.png`, { type: b.type || 'image/png' })
-  )
-})
-
-const persistImages = async () => {
-  const allKeys = await keys() as string[]
-  await Promise.all(
-    allKeys
-      .filter(k => k.startsWith('birthday:image:'))
-      .map(k => del(k))
-  )
-  await Promise.all(
-    images.value.map((f, idx) => set(`birthday:image:${idx}`, f))
-  )
-}
+const canCreate = computed(
+  () => !!(title.value.trim() && (message.value.trim() || name.value.trim()))
+)
 </script>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 

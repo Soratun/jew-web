@@ -7,6 +7,7 @@ const route = useRoute()
 const open = ref(false)
 
 const items: MenuItem[] = [
+  { label: 'CreateTemplate', to: '/template' },
   { label: 'meibirthday', to: '/meibirthday' },
   { label: 'namping', to: '/namping' },
 ]
