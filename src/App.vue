@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import AppNavbar from '@/components/AppNavbar.vue'
 </script>
 
 <template>
-  <RouterView />
+  <div class="min-h-dvh bg-gradient-to-b from-green-100 via-pink-50 to-yellow-100 font-itim">
+    <AppNavbar />
+    <router-view />
+  </div>
 </template>
 
 <style scoped>
