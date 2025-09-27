@@ -7,9 +7,7 @@
       </div>
     </header>
 
-    <!-- Body -->
     <main class="mx-auto max-w-6xl px-5 py-8">
-      <!-- Title -->
       <section class="mb-6">
         <label class="block mb-2 text-base font-medium text-gray-800">กรอกชื่อเรื่อง</label>
         <input
@@ -20,9 +18,7 @@
         />
       </section>
 
-      <!-- Two columns: Form | Preview -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-        <!-- Left: Form card -->
         <section class="rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
           <div class="p-5 border-b border-gray-100">
             <h2 class="text-lg font-semibold">ข้อมูลข้อความ</h2>
@@ -50,7 +46,6 @@
               </div>
             </div>
 
-            <!-- Image URLs -->
             <div class="pt-2">
               <div class="flex items-center justify-between mb-2">
                 <h3 class="text-sm font-medium text-gray-800">เพิ่มรูปภาพจาก URL</h3>
@@ -83,14 +78,18 @@
                 </div>
               </div>
 
-              <!-- Mini preview of URLs -->
               <div v-if="filteredUrls.length" class="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-2">
                 <div
-                  v-for="(src, i) in filteredUrls"
+                  v-for="(u, i) in filteredUrls"
                   :key="'thumb-' + i"
-                  class="rounded-lg overflow-hidden border border-gray-200 bg-white"
+                  class="rounded-lg overflow-hidden border bg-white"
                 >
-                  <img :src="src" alt="" class="h-24 w-full object-cover" loading="lazy" />
+                  <SmartImage
+                    :src="u"
+                    :size="1000"
+                    class="h-32 w-full object-contain"
+                    alt="preview"
+                  />
                 </div>
               </div>
             </div>
@@ -101,14 +100,13 @@
               type="button"
               :disabled="!canCreate"
               class="rounded-xl bg-black px-4 py-2 text-white text-sm hover:opacity-90 disabled:opacity-40"
-              @click="() => {}"
+              @click="clickCreate"
             >
               สร้าง
             </button>
           </div>
         </section>
 
-        <!-- Right: Preview card (balanced) -->
         <section class="rounded-2xl bg-white shadow-sm ring-1 ring-black/5 sticky top-4">
           <div class="p-5 border-b border-gray-100">
             <h2 class="text-lg font-semibold">Preview</h2>
@@ -132,21 +130,20 @@
               <p class="text-sm text-gray-500 mb-2">Images</p>
               <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <div
-                  v-for="(src, i) in filteredUrls"
+                  v-for="(u, i) in filteredUrls"
                   :key="'img-' + i"
-                  class="rounded-xl overflow-hidden border border-gray-200 bg-white"
+                  class="rounded-xl overflow-hidden border bg-white"
                 >
                   <div class="aspect-[4/3] bg-white/60">
-                    <img
-                      :src="src"
-                      class="w-full h-full object-cover"
+                    <SmartImage
+                      :src="u"
+                      :size="1000"
+                      class="w-full h-full object-contain"
                       alt="preview"
-                      loading="lazy"
                     />
                   </div>
                 </div>
 
-                <!-- placeholders when empty -->
                 <template v-if="filteredUrls.length === 0">
                   <div
                     v-for="n in 3"
@@ -169,6 +166,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import SmartImage from '@/components/SmartImage.vue'
+import api from '@/lib/api'
 
 const title = ref('')
 const message = ref('')
@@ -179,10 +178,22 @@ const addUrl = () => urls.value.push('')
 const removeUrl = (i: number) => urls.value.splice(i, 1)
 
 const filteredUrls = computed(() => urls.value.map((u) => u.trim()).filter(Boolean))
-
 const canCreate = computed(
-  () => !!(title.value.trim() && (message.value.trim() || name.value.trim()))
+  () => !!(title.value.trim() && (message.value.trim() || name.value.trim())),
 )
+
+const clickCreate = async () => {
+  if (!canCreate.value) return
+  const payload = [message.value]
+  const response = await api.post('/pages', {
+    template_id: 'b-01',
+    title: title.value.trim(),
+    message: payload,
+    photo_url: filteredUrls.value,
+  })
+  console.log('Create response:', response.data)
+  alert('Create action triggered!')
+}
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
