@@ -47,7 +47,7 @@
         <img
           v-for="(img, index) in res?.photo_url || []"
           :key="img"
-          :src="resolveSrc(img)"
+          :src="resolveSrc(img, 1200)"
           referrerpolicy="no-referrer"
           crossorigin="anonymous"
           class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
@@ -138,11 +138,46 @@ const openGift = async () => {
   launchConfetti()
 }
 
-function resolveSrc(input: string) {
-  // ถ้าเป็นลิงก์เต็มอยู่แล้ว ก็คืนค่าเดิม
-  if (/^https?:\/\//i.test(input)) return input
-  // ถ้าเป็น path/ไฟล์ (เช่น "images/a.jpg") ให้ชี้ไปที่ public
-  return `/${input.replace(/^\/+/, '')}`
+function resolveSrc(input: string, size = 1000) {
+  // 1) ลิงก์เต็มที่ไม่ใช่ Google Drive → ใช้ตามเดิม
+  if (/^https?:\/\//i.test(input) && !/\.google\.com\/(file|open|uc)/.test(input)) {
+    return input
+  }
+
+  // 2) ถ้าเป็น Google Drive → ดึง fileId แล้วแปลงเป็นลิงก์รูป
+  const fileId = extractDriveId(input)
+  if (fileId) {
+    // ตัวเลือกที่เสถียรและเร็วสำหรับ <img>
+    // หมายเหตุ: sz=w{size} สามารถเปลี่ยนความกว้างตามต้องการได้
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${size}`
+    // ทางเลือกอื่น (เผื่อบางเคส):
+    // return `https://drive.google.com/uc?export=view&id=${fileId}`
+  }
+
+  // 3) กรณีเป็น path ใน public/
+  return `/${String(input).replace(/^\/+/, '')}`
+}
+
+function extractDriveId(urlOrId: string): string | null {
+  // ถ้าผู้ใช้ส่งเป็น id ตรง ๆ (ไม่มี protocol) ที่ยาว ~ 25–50 อักขระ
+  if (!/^https?:\/\//i.test(urlOrId) && /^[a-zA-Z0-9_-]{10,}$/.test(urlOrId)) {
+    return urlOrId
+  }
+  try {
+    const u = new URL(urlOrId)
+
+    // รูปแบบ: /file/d/<ID>/view
+    const m1 = u.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/)
+    if (m1?.[1]) return m1[1]
+
+    // รูปแบบ: open?id=<ID> หรือ uc?id=<ID>
+    const qid = u.searchParams.get('id')
+    if (qid) return qid
+
+    return null
+  } catch {
+    return null
+  }
 }
 
 onMounted(async () => {
