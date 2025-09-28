@@ -168,6 +168,7 @@
 import { computed, ref } from 'vue'
 import SmartImage from '@/components/SmartImage.vue'
 import api from '@/lib/api'
+import router from '@/router'
 
 const title = ref('')
 const message = ref('')
@@ -192,7 +193,12 @@ const clickCreate = async () => {
     photo_url: filteredUrls.value,
   })
   console.log('Create response:', response.data)
-  alert('Create action triggered!')
+  router.push({
+    name: 'birthday',
+    query: {
+      id: response.data.id
+    },
+  })
 }
 </script>
 <style>
