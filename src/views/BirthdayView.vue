@@ -47,7 +47,9 @@
         <img
           v-for="(img, index) in res?.photo_url || []"
           :key="img"
-          :src="`/${img}`"
+          :src="resolveSrc(img)"
+          referrerpolicy="no-referrer"
+          crossorigin="anonymous"
           class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
           :style="{ animationDelay: `${index * 0.4}s` }"
         />
@@ -134,6 +136,13 @@ const openGift = async () => {
   bgMusic.volume = 0.6
   bgMusic.play().catch(() => {})
   launchConfetti()
+}
+
+function resolveSrc(input: string) {
+  // ถ้าเป็นลิงก์เต็มอยู่แล้ว ก็คืนค่าเดิม
+  if (/^https?:\/\//i.test(input)) return input
+  // ถ้าเป็น path/ไฟล์ (เช่น "images/a.jpg") ให้ชี้ไปที่ public
+  return `/${input.replace(/^\/+/, '')}`
 }
 
 onMounted(async () => {
