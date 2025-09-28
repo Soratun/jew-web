@@ -69,9 +69,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick, onBeforeUnmount } from "vue";
 import { Fireworks } from "fireworks-js";
 import confetti from "canvas-confetti";
+import { onBeforeRouteLeave } from "vue-router";
 // import api from "@/lib/api";
 
 // states
@@ -104,15 +105,38 @@ const launchConfetti = () => {
     colors: ["#ff69b4", "#ffcc00", "#66ccff", "#33cc99"],
   });
 };
+const stopBgMusic = () => {
+  try {
+    bgMusic.pause()
+    bgMusic.currentTime = 0
+    // เคลียร์ src เพื่อให้เบราว์เซอร์ยุติการเล่น/โหลดจริง ๆ
+    bgMusic.src = ''
+    // (ตัวเลือก) ถ้าต้องการกลับมาใช้เพลงเดิมตอนเข้าหน้าซ้ำ ให้คงพาธไว้แล้วไม่ต้องเคลียร์ src
+    // bgMusic.load() // ไม่จำเป็นถ้าเคลียร์ src
+  } catch {}
+}
+
+onBeforeUnmount(() => {
+  stopBgMusic()
+  fireworksInstance?.stop()
+})
+
+onBeforeRouteLeave((_to, _from, next) => {
+  stopBgMusic()
+  fireworksInstance?.stop()
+  next()
+})
 
 // เมื่อคลิกเปิดของขวัญ
 const openGift = async () => {
-  opened.value = true;
-  // const res = await api.get("/health");
-  // console.log("API Response:", res);
-  bgMusic.play().catch(() => {}); // บาง browser ต้องรอ interaction
-  launchConfetti();
-};
+  if (opened.value) return  // กัน double-click
+  opened.value = true
+  bgMusic.src = '/happy-birthday-357371.mp3' // เผื่อคุณเคลียร์ src ไว้ด้านบน
+  bgMusic.loop = true
+  bgMusic.volume = 0.6
+  bgMusic.play().catch(() => {})
+  launchConfetti()
+}
 
 // ดอกไม้ไฟ & scroll
 watch(opened, async (val) => {

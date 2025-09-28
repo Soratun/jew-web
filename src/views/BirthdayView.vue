@@ -57,31 +57,15 @@
         v-if="opened"
         class="font-itim mt-6 bg-white text-center text-base md:text-lg p-4 md:p-6 rounded-2xl shadow-md max-w-sm sm:max-w-md animate-pulse select-none"
       >
-       {{ res?.message.join(' ') }}
+        {{ res?.message.join(' ') }}
       </p>
-
-      <transition-group
-        name="fade"
-        tag="div"
-        v-if="opened"
-        ref="imageSection"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center mt-10 px-4"
-      >
-        <img
-          v-for="(img, index) in res?.photo_url || []"
-          :key="img"
-          :src="`/${img}`"
-          class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
-          :style="{ animationDelay: `${index * 0.4}s` }"
-        />
-      </transition-group>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { onBeforeRouteLeave, useRoute } from 'vue-router'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Fireworks } from 'fireworks-js'
 import confetti from 'canvas-confetti'
 import api from '@/lib/api'
@@ -120,10 +104,35 @@ const launchConfetti = () => {
   })
 }
 
+const stopBgMusic = () => {
+  try {
+    bgMusic.pause()
+    bgMusic.currentTime = 0
+    // เคลียร์ src เพื่อให้เบราว์เซอร์ยุติการเล่น/โหลดจริง ๆ
+    bgMusic.src = ''
+    // (ตัวเลือก) ถ้าต้องการกลับมาใช้เพลงเดิมตอนเข้าหน้าซ้ำ ให้คงพาธไว้แล้วไม่ต้องเคลียร์ src
+    // bgMusic.load() // ไม่จำเป็นถ้าเคลียร์ src
+  } catch {}
+}
+
+onBeforeUnmount(() => {
+  stopBgMusic()
+  fireworksInstance?.stop()
+})
+
+onBeforeRouteLeave((_to, _from, next) => {
+  stopBgMusic()
+  fireworksInstance?.stop()
+  next()
+})
+
 const openGift = async () => {
+  if (opened.value) return // กัน double-click
   opened.value = true
-  console.log("API Response:", res);
-  bgMusic.play().catch(() => {}) // บาง browser ต้องรอ interaction
+  bgMusic.src = '/happy-birthday-357371.mp3' // เผื่อคุณเคลียร์ src ไว้ด้านบน
+  bgMusic.loop = true
+  bgMusic.volume = 0.6
+  bgMusic.play().catch(() => {})
   launchConfetti()
 }
 
