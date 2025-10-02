@@ -74,7 +74,7 @@
         <p><span class="font-semibold">Team:</span> {{ team || '—' }}</p>
       </div>
 
-      <div v-if="today < new Date(birthdate)" class="flex items-center justify-center gap-4 mt-4">
+      <div v-if="today > new Date(birthdate)" class="flex items-center justify-center gap-4 mt-4">
         <div
           class="flex flex-col items-center rounded-lg px-3 py-2 shadow"
           :class="countdownBrandClass(brand)"
