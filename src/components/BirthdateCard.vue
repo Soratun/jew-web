@@ -15,7 +15,7 @@
       <p><span class="font-semibold">Team:</span> {{ team || '—' }}</p>
     </div>
 
-    <div v-if="today > new Date(birthdate)" class="flex items-center justify-center gap-4 mt-4">
+    <div class="flex items-center justify-center gap-4 mt-4" v-if="!isBirthday">
       <div
         class="flex flex-col items-center rounded-lg px-3 py-2 shadow"
         :class="countdownBrandClass(brand)"
@@ -74,7 +74,7 @@
         <p><span class="font-semibold">Team:</span> {{ team || '—' }}</p>
       </div>
 
-      <div v-if="today > new Date(birthdate)" class="flex items-center justify-center gap-4 mt-4">
+      <div v-if="!isBirthday" class="flex items-center justify-center gap-4 mt-4">
         <div
           class="flex flex-col items-center rounded-lg px-3 py-2 shadow"
           :class="countdownBrandClass(brand)"
@@ -128,6 +128,14 @@ const props = withDefaults(
 )
 
 const today = new Date()
+const isBirthday = computed(() => {
+  const [, , d] = props.birthdate.split('-').map(Number)
+  return (
+    today.getDate() >= d
+  )
+})
+
+
 const open = ref(false)
 
 function cardBrandClass(brand?: string) {
