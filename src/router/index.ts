@@ -38,6 +38,11 @@ const router = createRouter({
       path: '/jew',
       name: 'jew',
       component: JewView,
+    },
+    {
+      path: '/moonlight-and-monster',
+      name: 'moonlight-and-monster',
+      component: () => import('@/views/MoonlightAndMonsterView.vue'),
     }
   ],
 })

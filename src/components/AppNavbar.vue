@@ -10,6 +10,7 @@ const items: MenuItem[] = [
   { label: 'CreateTemplate', to: '/template' },
   { label: 'meibirthday', to: '/meibirthday' },
   { label: 'namping', to: '/namping' },
+  { label: 'Moonlight & Monster', to: '/moonlight-and-monster' },
 ]
 
 const isActive = (to: string) =>
