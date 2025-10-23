@@ -1,6 +1,5 @@
 /* color palette from <https://github.com/vuejs/theme> */
-@import "tailwindcss";
-@plugin "daisyui";
+
 
 :root {
   --vt-c-white: #ffffff;
@@ -80,10 +79,15 @@ body {
     'Fira Sans',
     'Droid Sans',
     'Helvetica Neue',
-    sans-serif;
+    sans-serif,
+    "Itim", cursive;
   font-size: 15px;
   color: #000;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.font-itim {
+  font-family: "Itim", cursive;
 }

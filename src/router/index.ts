@@ -5,6 +5,7 @@ import BirthdayView from '@/views/BirthdayView.vue'
 import MeiView from '@/views/MeiView.vue'
 import HomeView from '@/views/HomeView.vue'
 import JewView from '@/views/JewView.vue'
+import SatangpoundView from '@/views/SatangpoundView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -43,6 +44,11 @@ const router = createRouter({
       path: '/moonlight-and-monster',
       name: 'moonlight-and-monster',
       component: () => import('@/views/MoonlightAndMonsterView.vue'),
+    },
+    {
+      path: '/satangpound',
+      name: 'satangpound',
+      component: SatangpoundView,
     }
   ],
 })
