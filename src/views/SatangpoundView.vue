@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative min-h-screen bg-gradient-to-b from-green-100 via-pink-50 to-yellow-100 overflow-hidden font-itim text-gray-900"
+    class="relative min-h-screen bg-gradient-to-b from-blue-100 via-emerald-0 to-cyan-300 overflow-hidden font-itim text-gray-900"
   >
     <div
       class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-6 gap-7"
@@ -34,6 +34,21 @@
         <p class="text-base text-gray-800 mt-2">คลิกเพื่อเปิดของขวัญ</p>
       </div>
 
+      <transition-group
+        name="fade"
+        tag="div"
+        v-if="opened"
+        ref="imageSection"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center mt-10 px-4"
+      >
+        <img
+          v-for="(img, index) in images"
+          :key="img"
+          :src="`/${img}`"
+          class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
+          :style="{ animationDelay: `${index * 0.4}s` }"
+        />
+      </transition-group>
 
       <p
         v-if="opened"
@@ -43,7 +58,21 @@
         และก้าวสู่ความสำเร็จในทุกสิ่งที่ตั้งใจไว้ ทั้งเรื่องเรียนและสิ่งที่รักนะครับ"
       </p>
 
-
+      <transition-group
+        name="fade"
+        tag="div"
+        v-if="opened"
+        ref="imageSection"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 place-items-center mt-10 px-4"
+      >
+        <img
+          v-for="(img, index) in images"
+          :key="img"
+          :src="`/${img}`"
+          class="w-full max-w-xs md:max-w-sm h-auto rounded-xl shadow-xl opacity-0 animate-fade-in border-4 border-pink-300 hover:scale-105 transition-transform duration-300"
+          :style="{ animationDelay: `${index * 0.4}s` }"
+        />
+      </transition-group>
     </div>
   </div>
 </template>
@@ -65,7 +94,6 @@ const images = [
   'mei/544521998_1432224074935725_817592776792607025_n.jpg',
   'mei/IMG_5610.jpg',
 ]
-
 
 // background music
 const bgMusic = new Audio('/happy-birthday-357371.mp3')
