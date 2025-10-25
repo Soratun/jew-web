@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white">
     <div>
       <h1 class="text-4xl font-bold text-center pt-12 pb-7">วันเกิดประจำเดือนนี้</h1>
-      <div class="flex flex-row items-center justify-center">
+      <div class="flex flex-wrap gap-4 sm:gap-6 items-stretch justify-center">
         <div v-for="(item, index) in res" :key="item.id || index">
           <AppCard
             :name="item.formalDisplayName"
@@ -41,9 +41,8 @@ interface BirthdayItem {
 
 const res = ref<BirthdayItem[]>([])
 
-
 onMounted(async () => {
-  document.title = "home";
+  document.title = 'home'
   try {
     const response = await api.get('/birthmonth')
     res.value = response.data.map((item: BirthdayItem) => ({
