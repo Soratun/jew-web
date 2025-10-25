@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative min-h-screen bg-gradient-to-b from-blue-100 via-emerald-0 to-cyan-300 overflow-hidden font-itim text-gray-900"
+    class="min-h-screen bg-gradient-to-b from-sky-100 via-teal-100 to-cyan-200 font-itim text-gray-800 drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)]"
   >
     <div
       class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-6 gap-7"
@@ -21,7 +21,13 @@
         class="font-itim text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 select-none opacity-0 animate-slide-in"
         style="animation-delay: 1s"
       >
-        สุขสันต์วันเกิด 𝐒𝐚𝐭𝐚𝐧𝐠𝐩𝐨𝐮𝐧𝐝 🎉🎂🩵
+        สุขสันต์วันเกิด
+        <span
+          class="bg-gradient-to-r from-sky-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent font-bold text-glow"
+        >
+          𝐒𝐚𝐭𝐚𝐧𝐠𝐩𝐨𝐮𝐧𝐝</span
+        >
+        🎉🎂🩵
       </h1>
 
       <div
@@ -65,9 +71,8 @@
         v-if="opened"
         class="font-itim mt-6 bg-white text-center text-base md:text-lg p-4 md:p-6 rounded-2xl shadow-md max-w-sm sm:max-w-md animate-pulse select-none"
       >
-        “สุขสันต์วันเกิดนะ 𝐒𝐚𝐭𝐚𝐧𝐠𝐩𝐨𝐮𝐧𝐝 🎂
-        ขอให้ปีนี้เป็นปีที่ใจของตัวเองอบอุ่นขึ้นกว่าที่เคย เต็มไปด้วยความสบายใจ ความสุขเล็ก ๆ
-        ในทุกวัน และกำลังใจที่ค่อย ๆ ผลิบานจากคนรอบตัวนะครับ
+        “สุขสันต์วันเกิดนะ 𝐒𝐚𝐭𝐚𝐧𝐠𝐩𝐨𝐮𝐧𝐝 🎂 ขอให้ปีนี้เป็นปีที่ใจของตัวเองอบอุ่นขึ้นกว่าที่เคย
+        เต็มไปด้วยความสบายใจ ความสุขเล็ก ๆ ในทุกวัน และกำลังใจที่ค่อย ๆ ผลิบานจากคนรอบตัวนะครับ
         ขอให้ได้ทำในสิ่งที่รักด้วยหัวใจที่มีความสุข และเติบโตอย่างนุ่มนวลในแบบที่ตัวเองภูมิใจเสมอ
         ไม่ว่าจะเหนื่อยเมื่อไหร่ ก็ขอให้รู้ไว้ว่ายังมีคนอยู่ข้าง ๆ และเอาใจช่วยเสมอนะครับ”
       </p>
@@ -108,6 +113,11 @@ const images = [
   '/Satangpound/IMG_5204.jpg',
 ]
 
+function shuffleArray<T>(arr: T[]): T[] {
+  return [...arr].sort(() => Math.random() - 0.5)
+}
+const imagesShuffled = ref(shuffleArray(images))
+
 // background music
 const bgMusic = new Audio('/happy-birthday-357371.mp3')
 bgMusic.loop = true
@@ -147,6 +157,8 @@ onBeforeRouteLeave((_to, _from, next) => {
   next()
 })
 
+const swiperKey = ref(0)
+
 const openGift = async () => {
   if (opened.value) return // กัน double-click
   opened.value = true
@@ -155,6 +167,10 @@ const openGift = async () => {
   bgMusic.volume = 0.6
   bgMusic.play().catch(() => {})
   launchConfetti()
+
+  imagesShuffled.value = shuffleArray(images)
+
+  swiperKey.value++
 }
 
 watch(opened, async (val) => {
