@@ -1,13 +1,13 @@
 <template>
   <div class="min-h-screen bg-gradient-to-b from-green-50 via-pink-50 to-yellow-50">
     <!-- Header -->
-    <header class="border-b border-black/5 bg-white/70 backdrop-blur-md">
+    <di class="border-b border-black/5 bg-white/70 backdrop-blur-md">
       <div class="mx-auto max-w-6xl px-5 py-4 flex items-center justify-between">
         <h1 class="text-xl font-bold tracking-tight">🎂 Template Builder</h1>
       </div>
-    </header>
+    </di>
 
-    <main class="mx-auto max-w-6xl px-5 py-8">
+    <div class="mx-auto max-w-6xl px-5 py-8">
       <section class="mb-6">
         <label class="block mb-2 text-base font-medium text-gray-800">กรอกชื่อเรื่อง</label>
         <input
@@ -160,7 +160,7 @@
           </div>
         </section>
       </div>
-    </main>
+    </div>
   </div>
 </template>
 

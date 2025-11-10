@@ -18,7 +18,6 @@ if (OLD_HOSTS.has(window.location.host)) {
   window.location.replace(`https://fanclub48thailand.netlify.app/${search}${hash}`);
 }
 
-
 app.use(createPinia())
 app.use(router)
 

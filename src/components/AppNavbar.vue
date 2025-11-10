@@ -7,10 +7,11 @@ const route = useRoute()
 const open = ref(false)
 
 const items: MenuItem[] = [
-  { label: 'CreateTemplate', to: '/template' },
+  // { label: 'CreateTemplate', to: '/template' },
   { label: 'meibirthday', to: '/meibirthday' },
   { label: 'namping', to: '/namping' },
   { label: 'Satangpound', to: '/satangpound' },
+  { label: 'Jew', to: '/jew' },
   // { label: 'Moonlight & Monster', to: '/moonlight-and-monster' },
 ]
 
@@ -20,8 +21,10 @@ const isActive = (to: string) =>
 
 <template>
   <header
-    class="sticky top-0 z-50 border-b border-black/5 bg-white/70 backdrop-blur-md"
-  >
+   class="fixed inset-x-0 top-0 z-50 border-b border-black/5
+         bg-white/30 backdrop-blur supports-[backdrop-filter]:bg-white/20"
+>
+
     <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
       <RouterLink to="/" class="flex items-center gap-1">
         <span class="text-xl font-bold">Fan Club 48 Thailand</span>
@@ -66,7 +69,7 @@ const isActive = (to: string) =>
 
     <!-- เมนู mobile -->
     <transition name="fade">
-      <div v-if="open" class="md:hidden border-t border-black/5 bg-white">
+      <div v-if="open" class="md:hidden border-t border-black/5">
         <ul class="px-4 py-2 space-y-1">
           <li v-for="m in items" :key="m.to">
             <RouterLink

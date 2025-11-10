@@ -3,7 +3,7 @@ import AppNavbar from '@/components/AppNavbar.vue'
 </script>
 
 <template>
-  <div class="min-h-dvh bg-gradient-to-b from-green-100 via-pink-50 to-yellow-100 font-itim">
+  <div class="min-h-dvh font-itim">
     <AppNavbar />
     <router-view />
   </div>
