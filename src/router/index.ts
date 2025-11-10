@@ -11,17 +11,6 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: '/:pathMatch(.*)*',
-      component: HomeView,
-      beforeEnter() {
-        const NEW_ORIGIN = 'https://fanclub48thailand.netlify.app';
-        const hash = window.location.hash.replace(/^#/, '');
-        const target = `${NEW_ORIGIN}/#${hash || '/'}`;
-        window.location.replace(target);
-        return false;
-      },
-    },
-    {
       path: '/',
       name: 'home',
       component: HomeView,
