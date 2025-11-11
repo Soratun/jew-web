@@ -102,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick, onBeforeUnmount } from 'vue'
+import { ref, watch, nextTick, onBeforeUnmount, onMounted  } from 'vue'
 import { Fireworks } from 'fireworks-js'
 import confetti from 'canvas-confetti'
 import { onBeforeRouteLeave } from 'vue-router'
@@ -201,6 +201,10 @@ watch(opened, async (val) => {
       }, 6000)
     }
   }
+})
+
+onMounted(() => {
+  document.documentElement.style.setProperty('--navbar-bg', 'linear-gradient(to right, #b3e5fc, #e0f7fa)')
 })
 </script>
 

@@ -83,7 +83,7 @@
 <script setup lang="ts">
 import confetti from 'canvas-confetti'
 import { Fireworks } from 'fireworks-js'
-import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, ref, watch, onMounted } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
@@ -196,6 +196,10 @@ watch(opened, async (val) => {
       }, 6000)
     }
   }
+})
+
+onMounted(() => {
+  document.documentElement.style.setProperty('--navbar-bg', 'linear-gradient(to right, #b3e5fc, #e0f7fa)')
 })
 </script>
 

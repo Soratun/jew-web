@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 
 type MenuItem = { label: string; to: string }
@@ -17,15 +17,43 @@ const items: MenuItem[] = [
 
 const isActive = (to: string) =>
   computed(() => route.path === to || route.path.startsWith(to + '/'))
+
+const scrolled = ref(false)
+let raf = 0
+const onScroll = () => {
+  cancelAnimationFrame(raf)
+  raf = requestAnimationFrame(() => {
+    scrolled.value = window.scrollY > 24 // > 24px ถือว่าเลื่อนแล้ว
+  })
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll() // เช็กสถานะแรกเข้า
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+  cancelAnimationFrame(raf)
+})
 </script>
 
 <template>
   <header
-   class="fixed inset-x-0 top-0 z-50 border-b border-black/5
-         bg-white/30 backdrop-blur supports-[backdrop-filter]:bg-white/20"
->
+    class="sticky inset-x-0 top-0 z-50 border-b border-black/5 bg-white/30 backdrop-blur supports-[backdrop-filter]:bg-white/20"
+  >
+    <!-- เลเยอร์พื้นหลังของ Navbar (ควบคุมด้วย opacity) -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      :style="{
+        // ถ้าเมนูมือถือเปิด (open) = บังคับให้เห็นพื้นหลังเพื่อความชัด
+        opacity: open || !scrolled ? 1 : 0,
+        transition: 'opacity 200ms ease',
+        background: 'var(--navbar-bg, rgba(255,255,255,0.4))',
+        backdropFilter: (open || !scrolled) ? 'blur(10px)' : 'none'
+      }"
+    />
 
-    <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+    <nav class="relative mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
       <RouterLink to="/" class="flex items-center gap-1">
         <span class="text-xl font-bold">Fan Club 48 Thailand</span>
       </RouterLink>
@@ -46,12 +74,11 @@ const isActive = (to: string) =>
         </li>
       </ul>
 
-      <!-- ปุ่มขวา (เช่น Share/Download) – วางที่นี่ต่อยอดภายหลังได้ -->
       <div class="hidden md:flex items-center gap-2">
         <slot name="actions" />
       </div>
 
-      <!-- hamburger (mobile) -->
+      <!-- hamburger -->
       <button
         class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl hover:bg-black/5"
         @click="open = !open"
@@ -69,8 +96,8 @@ const isActive = (to: string) =>
 
     <!-- เมนู mobile -->
     <transition name="fade">
-      <div v-if="open" class="md:hidden border-t border-black/5">
-        <ul class="px-4 py-2 space-y-1">
+      <div v-if="open" class="md:hidden border-t border-black/5 relative z-10">
+        <ul class="px-4 py-2 space-y-1 bg-transparent">
           <li v-for="m in items" :key="m.to">
             <RouterLink
               :to="m.to"
@@ -85,8 +112,6 @@ const isActive = (to: string) =>
               {{ m.label }}
             </RouterLink>
           </li>
-
-          <!-- ปุ่ม actions (mobile) -->
           <li>
             <div class="pt-2 flex items-center gap-2">
               <slot name="actions" />
