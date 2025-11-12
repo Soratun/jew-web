@@ -14,41 +14,49 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: { title: 'แฟนคลับ 48 ประเทศไทย Fanclub 48 Thailand' },
     },
     {
       path: '/template',
       name: 'template',
       component: TemplateView,
+      meta: { title: 'Template' },
     },
     {
       path: '/birthday',
       name: 'birthday',
       component: BirthdayView,
+      meta: { title: 'Birthday' },
     },
     {
       path: '/meibirthday',
       name: 'meibirthday',
       component: MeiView,
+      meta: { title: 'Mei Birthday' },
     },
     {
       path: '/namping',
       name: 'namping',
       component: NampingView,
+      meta: { title: 'Namping' },
     },
     {
       path: '/jew',
       name: 'jew',
       component: JewView,
+      meta: { title: 'Jew' },
     },
     {
       path: '/moonlight-and-monster',
       name: 'moonlight-and-monster',
       component: () => import('@/views/MoonlightAndMonsterView.vue'),
+      meta: { title: 'Moonlight and Monster' },
     },
     {
       path: '/satangpound',
       name: 'satangpound',
       component: SatangpoundView,
+      meta: { title: 'Satangpound' },
     }
   ],
 })

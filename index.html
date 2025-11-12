@@ -5,15 +5,19 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TZGR14M84"></script>
+    <script async       src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_ID%"></script>
     <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag('js', new Date())
+      (function () {
+        const GA_ID =
+          (window.__VITE_GA_ID__) || 'G-XXXXXXXXXX'; 
 
-      gtag('config', 'G-2TZGR14M84')
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        gtag('js', new Date());
+        gtag('config', GA_ID, { send_page_view: false });
+      })();
     </script>
     <title>Vite App</title>
   </head>
