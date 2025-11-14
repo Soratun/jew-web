@@ -29,10 +29,7 @@ if (OLD_HOSTS.has(window.location.host)) {
 router.afterEach((to) => {
   if (!import.meta.env.PROD) return;
 
-  const GA_ID = import.meta.env.VITE_GA_ID as string;
-
   const path = window.location.hash || to.fullPath || to.path;
-
   const title = (to.meta?.title as string) || 'Fanclub 48 Thailand';
 
   document.title = title;
