@@ -25,11 +25,17 @@ if (OLD_HOSTS.has(window.location.host)) {
   window.location.replace(`https://fanclub48thailand.netlify.app/${search}${hash}`);
 }
 
-
 router.afterEach((to) => {
-  if (!import.meta.env.PROD) return; // ข้ามตอน dev
-  const path = to.fullPath || to.path || window.location.pathname;
-  const title = (to.meta?.title as string) || document.title;
+  if (!import.meta.env.PROD) return;
+
+  const GA_ID = import.meta.env.VITE_GA_ID as string;
+
+  const path = window.location.hash || to.fullPath || to.path;
+
+  const title = (to.meta?.title as string) || 'Fanclub 48 Thailand';
+
+  document.title = title;
+
   pageview(GA_ID, path, title);
 });
 
