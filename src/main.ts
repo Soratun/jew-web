@@ -10,7 +10,6 @@ import { loadGtag, pageview } from './plugins/ga'
 const app = createApp(App)
 
 const GA_ID = import.meta.env.VITE_GA_ID as string;
-console.log('GA_ID from env =', GA_ID);
 
 if (import.meta.env.PROD) {
   loadGtag(GA_ID);
