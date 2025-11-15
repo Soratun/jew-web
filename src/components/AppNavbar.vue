@@ -3,57 +3,49 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 
 type MenuItem = { label: string; to: string }
+
 const route = useRoute()
 const open = ref(false)
 
 const items: MenuItem[] = [
-  // { label: 'CreateTemplate', to: '/template' },
   { label: 'meibirthday', to: '/meibirthday' },
   { label: 'namping', to: '/namping' },
   { label: 'Satangpound', to: '/satangpound' },
   { label: 'Jew', to: '/jew' },
-  // { label: 'Moonlight & Monster', to: '/moonlight-and-monster' },
 ]
 
 const isActive = (to: string) =>
   computed(() => route.path === to || route.path.startsWith(to + '/'))
 
-const scrolled = ref(false)
-let raf = 0
-const onScroll = () => {
-  cancelAnimationFrame(raf)
-  raf = requestAnimationFrame(() => {
-    scrolled.value = window.scrollY > 24 // > 24px ถือว่าเลื่อนแล้ว
-  })
+// ✅ state เช็คว่ามีการเลื่อนหรือยัง
+const isScrolled = ref(false)
+
+const handleScroll = () => {
+  // > 10 px จะถือว่า "เลื่อนแล้ว"
+  isScrolled.value = window.scrollY > 10
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', onScroll, { passive: true })
-  onScroll() // เช็กสถานะแรกเข้า
+  handleScroll() // เผื่อโหลดมาหน้าแรกไม่ได้อยู่บนสุด
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
+
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', onScroll)
-  cancelAnimationFrame(raf)
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
-
 <template>
   <header
-    class="sticky inset-x-0 top-0 z-50 border-b border-black/5 bg-white/30 backdrop-blur supports-[backdrop-filter]:bg-white/20"
+    class="sticky top-0 z-50 border-b border-black/5 transition-colors duration-300"
+    :class="[
+      // ถ้าเลื่อนแล้ว → โปร่ง + เบลอ
+      isScrolled
+        ? 'bg-white/20 backdrop-blur-md supports-[backdrop-filter]:bg-white/10'
+        // ถ้าอยู่บนสุด → ขาวทึบ
+        : 'bg-white'
+    ]"
   >
-    <!-- เลเยอร์พื้นหลังของ Navbar (ควบคุมด้วย opacity) -->
-    <div
-      class="absolute inset-0 pointer-events-none"
-      :style="{
-        // ถ้าเมนูมือถือเปิด (open) = บังคับให้เห็นพื้นหลังเพื่อความชัด
-        opacity: open || !scrolled ? 1 : 0,
-        transition: 'opacity 200ms ease',
-        background: 'var(--navbar-bg, rgba(255,255,255,0.4))',
-        backdropFilter: (open || !scrolled) ? 'blur(10px)' : 'none'
-      }"
-    />
-
-    <nav class="relative mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+    <nav class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
       <RouterLink to="/" class="flex items-center gap-1">
         <span class="text-xl font-bold">Fan Club 48 Thailand</span>
       </RouterLink>
@@ -78,7 +70,6 @@ onBeforeUnmount(() => {
         <slot name="actions" />
       </div>
 
-      <!-- hamburger -->
       <button
         class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl hover:bg-black/5"
         @click="open = !open"
@@ -86,18 +77,17 @@ onBeforeUnmount(() => {
         :aria-expanded="open"
       >
         <svg v-if="!open" class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
         <svg v-else class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-          <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
     </nav>
 
-    <!-- เมนู mobile -->
     <transition name="fade">
-      <div v-if="open" class="md:hidden border-t border-black/5 relative z-10">
-        <ul class="px-4 py-2 space-y-1 bg-transparent">
+      <div v-if="open" class="md:hidden border-t border-black/5">
+        <ul class="px-4 py-2 space-y-1">
           <li v-for="m in items" :key="m.to">
             <RouterLink
               :to="m.to"
@@ -124,6 +114,12 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-.fade-enter-active, .fade-leave-active { transition: opacity .15s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

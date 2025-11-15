@@ -3,11 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  document.documentElement.style.setProperty('--navbar-bg', 'linear-gradient(to right, #F5E6CA, #F5E6CA)')
-})
 </script>
 
 <style scoped></style>
