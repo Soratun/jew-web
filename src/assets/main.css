@@ -5,3 +5,10 @@
 
 @import './base.css';
 
+@theme {
+  --color-cream-light: #F9F1E7;   /* พื้นหลังเว็บ */
+  --color-pure-white:  #FFFFFF;   /* การ์ด */
+  --color-soft-brown:  #A67C52;   /* ปุ่ม / ไฮไลท์ */
+  --color-deep-brown:  #4B3621;   /* ตัวอักษรหัวข้อ */
+  --color-latte-beige: #DCC7B0;   /* เส้นคั่น / ขอบ */
+}
