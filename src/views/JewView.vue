@@ -47,7 +47,6 @@ function scrollToSection(id: string) {
 }
 
 async function startGift() {
-  // พยายามเล่นเพลงเมื่อ User Interaction (Click)
   await toggleMusic(true)
   scrollToSection('letter-section')
 }
@@ -81,24 +80,21 @@ async function toggleMusic(forcePlay = false) {
 // --- Lifecycle Hooks (Animation Logic) ---
 
 onMounted(() => {
-  // สร้าง Observer เพื่อจับตาดู Element เมื่อเลื่อนมาถึง
   observer.value = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible')
-          // ถ้าอยากให้เล่นครั้งเดียวแล้วจบเลย (ไม่ Fade ออกตอนเลื่อนกลับ) ให้ uncomment บรรทัดล่าง
           observer.value?.unobserve(entry.target)
         }
       })
     },
     {
-      threshold: 0.15, // ต้องเห็น Element 15% ถึงจะเริ่ม Animation
-      rootMargin: '0px 0px -50px 0px', // Offset ให้เริ่มก่อนถึงนิดนึง
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px',
     },
   )
 
-  // สั่งให้ Observer จับตาดูทุก class ที่ชื่อ .scroll-animate
   const elements = document.querySelectorAll('.scroll-animate')
   elements.forEach((el) => observer.value?.observe(el))
 })
@@ -109,17 +105,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="bg-cream-light min-h-screen text-deep-brown font-sans overflow-x-hidden">
+  <div class="bg-cream-light-jew min-h-screen text-deep-brown-jew font-sans overflow-x-hidden">
     <audio ref="audioRef" :src="bgmSrc" loop class="hidden" />
 
     <section id="hero-section" class="min-h-screen flex items-center justify-center px-4 py-10">
       <div
-        class="scroll-animate max-w-xl w-full bg-pure-white/95 rounded-[2rem] shadow-soft border border-latte-beige/60 px-6 py-10 sm:px-10 text-center space-y-5"
+        class="scroll-animate max-w-xl w-full bg-pure-white-jew/95 rounded-[2rem] shadow-soft border border-latte-beige-jew/60 px-6 py-10 sm:px-10 text-center space-y-5"
       >
-        <p class="text-sm tracking-[0.25em] uppercase text-soft-brown font-medium">
+        <p class="text-sm tracking-[0.25em] uppercase text-soft-brown-jew font-medium">
           For Jew – Birthday Letter
         </p>
-        <h1 class="text-3xl sm:text-4xl font-bold text-deep-brown leading-tight">
+        <h1 class="text-3xl sm:text-4xl font-bold text-deep-brown-jew leading-tight">
           เว็บเล็ก ๆ ที่ตั้งใจทำให้<br class="hidden sm:block" />จิวในวันพิเศษนี้ครับ
         </h1>
         <p class="text-base sm:text-lg text-[#6b4a2b] leading-relaxed">
@@ -128,7 +124,7 @@ onUnmounted(() => {
 
         <div class="pt-6">
           <button
-            class="btn-primary text-lg px-10 py-3 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            class="btn-primary-jew text-lg px-10 py-3 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300"
             @click="startGift"
           >
             เริ่มเปิดของขวัญ 🎁
@@ -139,11 +135,11 @@ onUnmounted(() => {
 
     <section id="letter-section" class="min-h-screen flex items-center justify-center px-4 py-16">
       <div
-        class="scroll-animate max-w-3xl w-full bg-pure-white/95 rounded-[2rem] shadow-soft border border-latte-beige/60 px-6 py-10 sm:px-12"
+        class="scroll-animate max-w-3xl w-full bg-pure-white-jew/95 rounded-[2rem] shadow-soft border border-latte-beige-jew/60 px-6 py-10 sm:px-12"
       >
         <div class="flex items-center gap-3 mb-6">
           <div class="h-[1px] flex-1 bg-latte-beige"></div>
-          <p class="text-sm font-semibold text-soft-brown tracking-widest uppercase">To Jew</p>
+          <p class="text-sm font-semibold text-soft-brown-jew tracking-widest uppercase">To Jew</p>
           <div class="h-[1px] flex-1 bg-latte-beige"></div>
         </div>
 
@@ -161,7 +157,7 @@ onUnmounted(() => {
             หวังว่าของขวัญชิ้นเล็กชิ้นนี้จะทำให้จิวยิ้มได้
             และทำให้วันนี้เป็นวันที่ดีอีกวันหนึ่งของปี
           </p>
-          <p class="font-medium text-soft-brown">สุขสันต์วันเกิดนะครับ ขอให้มีความสุขมาก ๆ 🤎✨</p>
+          <p class="font-medium text-soft-brown-jew">สุขสันต์วันเกิดนะครับ ขอให้มีความสุขมาก ๆ 🤎✨</p>
           <p class="pt-4 text-sm text-gray-500 text-right">
             - จากคนตัวเล็ก ๆ คนหนึ่งที่ดีใจมากที่ได้รู้จักจิวบนโลกใบนี้ครับ
           </p>
@@ -169,7 +165,7 @@ onUnmounted(() => {
 
         <div class="pt-10 flex justify-center">
           <button
-            class="btn-secondary px-8 py-2 rounded-full"
+            class="btn-secondary-jew px-8 py-2 rounded-full"
             @click="scrollToSection('gallery-section')"
           >
             ดูโมเมนต์ของจิว 📸
@@ -181,7 +177,7 @@ onUnmounted(() => {
     <section id="gallery-section" class="min-h-screen px-4 py-16">
       <div class="max-w-5xl mx-auto">
         <div class="text-center mb-10 scroll-animate">
-          <h2 class="text-3xl font-bold text-deep-brown mb-3">โมเมนต์น่ารักของจิว</h2>
+          <h2 class="text-3xl font-bold text-deep-brown-jew mb-3">โมเมนต์น่ารักของจิว</h2>
           <p class="text-lg text-[#6b4a2b]">รวมภาพถ่ายและความทรงจำดี ๆ ที่อยากเก็บไว้ในนี้ครับ</p>
         </div>
 
@@ -189,7 +185,7 @@ onUnmounted(() => {
           <div
             v-for="(item, index) in images"
             :key="index"
-            class="scroll-animate card bg-pure-white rounded-3xl shadow-sm border border-latte-beige/50 overflow-hidden hover:shadow-xl transition-all duration-300 group"
+            class="scroll-animate card bg-pure-white-jew rounded-3xl shadow-sm border border-latte-beige-jew/50 overflow-hidden hover:shadow-xl transition-all duration-300 group"
             :style="{ transitionDelay: `${index * 100}ms` }"
           >
             <figure class="aspect-[3/4] overflow-hidden relative">
@@ -202,7 +198,7 @@ onUnmounted(() => {
                 class="absolute inset-0 bg-gradient-to-t from-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               ></div>
             </figure>
-            <div class="p-4 text-sm sm:text-base text-deep-brown bg-white relative z-10">
+            <div class="p-4 text-sm sm:text-base text-deep-brown-jew bg-white relative z-10">
               {{ item.caption }}
             </div>
           </div>
@@ -210,7 +206,7 @@ onUnmounted(() => {
 
         <div class="pt-12 flex justify-center scroll-animate">
           <button
-            class="btn-primary px-8 py-3 rounded-full shadow-md"
+            class="btn-primary-jew px-8 py-3 rounded-full shadow-md"
             @click="scrollToSection('music-section')"
           >
             ฟังเพลงไปพร้อมกัน 🎧
@@ -227,12 +223,12 @@ onUnmounted(() => {
       <div class="absolute bottom-10 right-10 text-9xl opacity-5 -rotate-12 select-none">🎶</div>
 
       <div
-        class="scroll-animate max-w-xl w-full bg-pure-white/95 rounded-[2rem] shadow-soft border border-latte-beige/60 px-6 py-10 sm:px-12 text-center relative z-10"
+        class="scroll-animate max-w-xl w-full bg-pure-white-jew/95 rounded-[2rem] shadow-soft border border-latte-beige-jew/60 px-6 py-10 sm:px-12 text-center relative z-10"
       >
-        <h2 class="text-3xl font-bold text-deep-brown">เพลงประกอบของขวัญ</h2>
-        <p class="text-sm mt-2 text-soft-brown font-medium">Now Playing: “Morning Light”</p>
+        <h2 class="text-3xl font-bold text-deep-brown-jew">เพลงประกอบของขวัญ</h2>
+        <p class="text-sm mt-2 text-soft-brown-jew font-medium">Now Playing: “Morning Light”</p>
 
-        <div class="mt-8 space-y-4 text-lg leading-relaxed text-deep-brown">
+        <div class="mt-8 space-y-4 text-lg leading-relaxed text-deep-brown-jew">
           <p>
             ลองฟังเพลงนี้ไปพร้อมกับอ่านจดหมายและดูภาพของวันนี้นะครับ ตั้งใจเลือกบรรยากาศที่นุ่ม ๆ
             เบา ๆ เหมือนแสงตอนเช้า ที่ค่อย ๆ เข้ามาทำให้วันทั้งวันดูดีขึ้นอีกนิดนึง
@@ -249,7 +245,7 @@ onUnmounted(() => {
           </div>
 
           <button
-            class="btn-primary rounded-full px-8 py-3 flex items-center gap-3 shadow-lg active:scale-95 transition-transform"
+            class="btn-primary-jew rounded-full px-8 py-3 flex items-center gap-3 shadow-lg active:scale-95 transition-transform"
             @click="toggleMusic(false)"
           >
             <span v-if="isPlaying" class="flex items-center gap-2">
@@ -259,9 +255,9 @@ onUnmounted(() => {
           </button>
         </div>
 
-        <div class="pt-10 border-t border-latte-beige/30 mt-8">
+        <div class="pt-10 border-t border-latte-beige-jew/30 mt-8">
           <button
-            class="text-soft-brown hover:text-deep-brown transition-colors underline underline-offset-4"
+            class="text-soft-brown-jew hover:text-deep-brown-jew transition-colors underline underline-offset-4"
             @click="scrollToSection('greeting-section')"
           >
             ไปดูคำอวยพร 💌
@@ -310,7 +306,7 @@ onUnmounted(() => {
 
         <div class="pt-10 flex justify-center">
           <button
-            class="btn-primary px-8 py-3 rounded-full shadow-md"
+            class="btn-primary-jew px-8 py-3 rounded-full shadow-md"
             @click="scrollToSection('chibi-section')"
           >
             ไปดู Chibi ของจิวกัน ✨
@@ -350,7 +346,7 @@ onUnmounted(() => {
 
         <div class="flex flex-wrap justify-center gap-4 pt-4">
           <button
-            class="btn-secondary px-6 py-2 rounded-full flex items-center gap-2"
+            class="btn-secondary-jew px-6 py-2 rounded-full flex items-center gap-2"
             @click="scrollToSection('hero-section')"
           >
             ⬆️ กลับไปด้านบน
@@ -365,47 +361,43 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* --- Utility Classes (นำไปใช้ร่วมกับ Tailwind) --- */
-.bg-cream-light {
+.bg-cream-light-jew {
   background-color: var(--color-cream-light);
 }
-.text-deep-brown {
+.text-deep-brown-jew {
   color: var(--color-deep-brown);
 }
-.text-soft-brown {
+.text-soft-brown-jew {
   color: var(--color-soft-brown);
 }
-.border-latte-beige {
+.border-latte-beige-jew {
   border-color: var(--color-latte-beige);
 }
-.bg-pure-white {
+.bg-pure-white-jew {
   background-color: var(--color-pure-white);
 }
 
-/* ปุ่มหลัก */
-.btn-primary {
+.btn-primary-jew {
   background-color: var(--color-soft-brown);
   color: white;
   border: none;
   transition: all 0.2s ease;
 }
-.btn-primary:hover {
+.btn-primary-jew:hover {
   background-color: #8c6239;
   transform: translateY(-2px);
 }
 
-/* ปุ่มรอง */
-.btn-secondary {
+.btn-secondary-jew {
   background-color: var(--color-latte-beige);
   color: var(--color-deep-brown);
   border: none;
   transition: all 0.2s ease;
 }
-.btn-secondary:hover {
+.btn-secondary-jew:hover {
   background-color: #c9af91;
 }
 
-/* เงาแบบนุ่ม */
 .shadow-soft {
   box-shadow:
     0 20px 40px -10px rgba(75, 54, 33, 0.1),
