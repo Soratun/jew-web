@@ -13,27 +13,33 @@ const observer = ref<IntersectionObserver | null>(null)
 const images = [
   {
     src: 'jew/jew2.jpg',
-    caption: 'วันที่นั่งม้านั่งชุดขาวที่ดูสบายตาและอบอุ่นมาก ๆ',
+    caption: 'วันที่นั่งม้านั่งชุดขาวที่ดูสบายตาและอบอุ่นใจ',
+    sticker: 'jew/jew2-chibi.png',
   },
   {
     src: 'jew/jew3.jpg',
     caption: 'โมเมนต์ฟองสบู่ที่สดใสจนเผลอยิ้มตาม',
+    sticker: 'jew/jew3-chibi.png',
   },
   {
     src: 'jew/IMG_0063.jpg',
     caption: 'รอยยิ้มใส่แว่นกับหลอดชมพูที่น่ารักมาก',
+    sticker: 'jew/IMG_0063-chibi.png',
   },
   {
     src: 'jew/jew4.jpg',
     caption: 'รูปถือก้อนเมฆที่เหมือนอยู่ในความฝันนิด ๆ',
+    sticker: 'jew/jew4-chibi.png',
   },
   {
     src: 'jew/IMG_0270.jpg',
     caption: 'แว่น indoor อุ่น ๆ ที่ดูโคมไฟแล้วก็ใจอุ่นตาม',
+    sticker: 'jew/IMG_0270-chibi.png',
   },
   {
     src: 'jew/IMG_3004.jpg',
     caption: 'ฮัลโลวีนชุดไทยที่เท่มากและน่าจดจำสุด ๆ',
+    sticker: 'jew/IMG_3004-chibi.png',
   },
 ]
 
@@ -198,7 +204,7 @@ onUnmounted(() => {
                 class="absolute inset-0 bg-gradient-to-t from-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               ></div>
             </figure>
-            <div class="p-4 text-sm sm:text-base text-deep-brown-jew bg-white relative z-10">
+            <div class="p-4 text-sm sm:text-base text-deep-brown-jew bg-white relative z-10 text-center">
               {{ item.caption }}
             </div>
           </div>
