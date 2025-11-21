@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, onBeforeMount } from 'vue'
 
 // --- Configuration ---
 const bgmSrc = '/morning-light-ambient-acoustic-guitar-background-music-for-videos-5712.mp3'
@@ -85,7 +85,16 @@ async function toggleMusic(forcePlay = false) {
 
 // --- Lifecycle Hooks (Animation Logic) ---
 
+onBeforeMount(() => {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual'
+  }
+})
+
 onMounted(() => {
+
+  window.scrollTo(0, 0)
+
   observer.value = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
