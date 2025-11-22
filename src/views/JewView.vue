@@ -209,6 +209,11 @@ onUnmounted(() => {
                 alt=""
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
+              <img
+                v-if="item.sticker"
+                :src="item.sticker"
+                class="absolute bottom-2 right-2 w-16 h-16 sm:w-32 sm:h-32 object-contain drop-shadow-md rotate-12 z-20 hover:scale-110 transition-transform"
+              />
               <div
                 class="absolute inset-0 bg-gradient-to-t from-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               ></div>
