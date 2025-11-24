@@ -12,34 +12,34 @@ const observer = ref<IntersectionObserver | null>(null)
 // ข้อมูลรูปภาพ
 const images = [
   {
-    src: 'jew/jew2.jpg',
+    src: 'jew/jew2.webp',
     caption: 'วันที่นั่งม้านั่งชุดขาวที่ดูสบายตาและอบอุ่นใจ',
-    sticker: 'jew/jew2-chibi.png',
+    sticker: 'jew/jew2-chibi.webp',
   },
   {
-    src: 'jew/jew3.jpg',
+    src: 'jew/jew3.webp',
     caption: 'โมเมนต์กับฟองสบู่ที่สดใส มองกี่ทีก็เผลอยิ้มตามได้เสมอ',
-    sticker: 'jew/jew3-chibi.png',
+    sticker: 'jew/jew3-chibi.webp',
   },
   {
-    src: 'jew/IMG_0063.jpg',
+    src: 'jew/IMG_0063.webp',
     caption: 'รอยยิ้มใส่แว่นกับหลอดชมพูที่น่ารักมาก',
-    sticker: 'jew/IMG_0063-chibi.png',
+    sticker: 'jew/IMG_0063-chibi.webp',
   },
   {
-    src: 'jew/jew4.jpg',
+    src: 'jew/jew4.webp',
     caption: 'รูปถือก้อนเมฆที่ละมุนราวกับอยู่ในความฝัน',
-    sticker: 'jew/jew4-chibi.png',
+    sticker: 'jew/jew4-chibi.webp',
   },
   {
-    src: 'jew/IMG_0270.jpg',
+    src: 'jew/IMG_0270.webp',
     caption: 'ลุคใส่แว่นสบาย ๆ กับแสงไฟอุ่น ๆ ที่เห็นแล้วใจฟูตามเลย',
-    sticker: 'jew/IMG_0270-chibi.png',
+    sticker: 'jew/IMG_0270-chibi.webp',
   },
   {
-    src: 'jew/IMG_3004.jpg',
+    src: 'jew/IMG_3004.webp',
     caption: 'ฮัลโลวีนชุดไทยที่เท่มากและน่าจดจำสุด ๆ',
-    sticker: 'jew/IMG_3004-chibi.png',
+    sticker: 'jew/IMG_3004-chibi.webp',
   },
 ]
 
@@ -204,20 +204,22 @@ onUnmounted(() => {
             class="scroll-animate card bg-pure-white-jew rounded-3xl shadow-sm border border-latte-beige-jew/50 overflow-hidden hover:shadow-xl transition-all duration-300 group"
             :style="{ transitionDelay: `${index * 100}ms` }"
           >
-            <figure class="aspect-[3/4] overflow-hidden relative">
+            <figure class="aspect-[3/4] overflow-hidden relative bg-gray-100">
               <img
                 :src="item.src"
-                alt=""
+                :alt="item.caption"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
+
               <img
                 v-if="item.sticker"
                 :src="item.sticker"
+                loading="lazy"
+                decoding="async"
                 class="absolute bottom-2 right-2 w-16 h-16 sm:w-32 sm:h-32 object-contain drop-shadow-md rotate-12 z-20 hover:scale-110 transition-transform"
               />
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              ></div>
             </figure>
             <div
               class="p-4 text-sm sm:text-base text-deep-brown-jew bg-white relative z-10 text-center"
@@ -344,7 +346,9 @@ onUnmounted(() => {
     >
       <div class="scroll-animate max-w-3xl w-full text-center space-y-8">
         <div class="bg-white/95 rounded-[2.5rem] shadow-soft border border-[#DCC7B0]/60 px-6 py-12">
-          <h2 class="text-3xl font-bold text-[#4B3621] mb-8">Fanart Chibi เล็ก ๆ ที่วาดด้วยใจครับ</h2>
+          <h2 class="text-3xl font-bold text-[#4B3621] mb-8">
+            Fanart Chibi เล็ก ๆ ที่วาดด้วยใจครับ
+          </h2>
 
           <div class="flex justify-center mb-8">
             <div
