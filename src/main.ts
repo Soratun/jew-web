@@ -19,14 +19,23 @@ const OLD_HOSTS = new Set(['jew-web.netlify.app'])
 
 if (OLD_HOSTS.has(window.location.host)) {
   const search = window.location.search || ''
-  const hash = window.location.hash || '#/'
-  window.location.replace(`https://fanclub48thailand.netlify.app/${search}${hash}`)
+  const currentHash = window.location.hash
+  let targetPath = '/'
+
+  if (currentHash && currentHash.startsWith('#/')) {
+    targetPath = currentHash.substring(1)
+  } else if (currentHash.startsWith('#')) {
+    targetPath = currentHash.substring(1)
+  }
+
+  window.location.replace(`https://fanclub48thailand.netlify.app${targetPath}${search}`)
 }
 
 if (window.location.hash && window.location.hash.startsWith('#/')) {
   const realPath = window.location.hash.substring(1)
   window.history.replaceState({}, document.title, realPath)
 }
+
 router.afterEach((to) => {
   if (!import.meta.env.PROD) return
 
