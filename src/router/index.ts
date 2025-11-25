@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import NampingView from '@/views/NampingView.vue'
 import TemplateView from '@/views/TemplateView.vue'
 import BirthdayView from '@/views/BirthdayView.vue'
@@ -8,7 +8,7 @@ import JewView from '@/views/JewView.vue'
 import SatangpoundView from '@/views/SatangpoundView.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
