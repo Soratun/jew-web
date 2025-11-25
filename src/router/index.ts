@@ -41,10 +41,10 @@ const router = createRouter({
       meta: { title: 'Namping' },
     },
     {
-      path: '/jew',
-      name: 'jew',
+      path: '/jew-birthday-2025',
+      name: 'jew-birthday-2025',
       component: JewView,
-      meta: { title: 'Jew' },
+      meta: { title: 'jew-birthday-2025' },
     },
     {
       path: '/moonlight-and-monster',

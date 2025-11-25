@@ -11,7 +11,7 @@ const items: MenuItem[] = [
   { label: 'meibirthday', to: '/meibirthday' },
   { label: 'namping', to: '/namping' },
   { label: 'Satangpound', to: '/satangpound' },
-  { label: 'Jew', to: '/jew' },
+  { label: 'Jew', to: '/jew-birthday-2025' },
 ]
 
 const isActive = (to: string) =>
