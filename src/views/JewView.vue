@@ -355,7 +355,7 @@ onUnmounted(() => {
               class="bg-[#F9F1E7] rounded-[2rem] border-4 border-white shadow-inner p-6 inline-block rotate-1 hover:rotate-0 transition-transform duration-500"
             >
               <img
-                src="/jew/iiG.gif"
+                src="/jew/GIF_25681127222157532.GIF"
                 alt="Chibi Jew Birthday Animation"
                 class="max-w-xs sm:max-w-sm w-full h-auto object-contain drop-shadow-sm"
               />
