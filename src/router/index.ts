@@ -6,6 +6,7 @@ import MeiView from '@/views/MeiView.vue'
 import HomeView from '@/views/HomeView.vue'
 import JewView from '@/views/JewView.vue'
 import SatangpoundView from '@/views/SatangpoundView.vue'
+import SatchanHBD2025View from '@/views/SatchanHBD2025View.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,7 +58,13 @@ const router = createRouter({
       name: 'satangpound',
       component: SatangpoundView,
       meta: { title: 'Satangpound' },
-    }
+    },
+    {
+      path: '/satchan-birthday-2025',
+      name: 'satchan-birthday-2025',
+      component: SatchanHBD2025View,
+      meta: { title: 'Satchan Birthday 2025' },
+    },
   ],
 })
 
