@@ -12,3 +12,21 @@
   --color-deep-brown:  #4B3621;   /* ตัวอักษรหัวข้อ */
   --color-latte-beige: #DCC7B0;   /* เส้นคั่น / ขอบ */
 }
+
+@plugin "daisyui/theme" {
+  name: "sakura";
+  default: true;
+  --color-primary: #FFB7C5;  /* Primary */
+  --color-secondary: #FF9EAA;  /* Secondary */
+  --color-accent: #FEE3E8;  /* Accent */
+  --color-neutral: #5C5C5C;  /* Neutral */
+  --color-base-100: #FFF0F5; /* Base-100 */
+  --color-info: #93C5FD; /* Info */
+  --color-success: #86EFAC; /* Success */
+  --color-warning: #FCD34D; /* Warning */
+  --color-error: #F87171; /* Error */
+
+  --color-text-primary: #4B3621; /* สีตัวอักษรบนปุ่ม Primary (ใช้สี Deep Brown ของคุณ) */
+  --color-text-secondary: #4B3621; /* สีตัวอักษรบนปุ่ม Secondary */
+  --color-text-accent: #4B3621; /* สีตัวอักษรบนการ์ด Accent */
+}

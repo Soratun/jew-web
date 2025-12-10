@@ -12,6 +12,7 @@ const items: MenuItem[] = [
   { label: 'namping', to: '/namping' },
   { label: 'Satangpound', to: '/satangpound' },
   { label: 'Jew', to: '/jew-birthday-2025' },
+  { label: 'Satchang', to: '/satchan-birthday-2025' }
 ]
 
 const isActive = (to: string) =>
