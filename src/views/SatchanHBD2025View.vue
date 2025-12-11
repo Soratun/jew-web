@@ -40,6 +40,23 @@ const pairedMemories = computed(() => {
   return pairs
 })
 
+const audioRef = ref<HTMLAudioElement | null>(null)
+const isPlaying = ref(false)
+
+const toggleMusic = () => {
+  if (!audioRef.value) return
+
+  if (isPlaying.value) {
+    audioRef.value.pause()
+  } else {
+    // try-catch เผื่อ browser บล็อก
+    audioRef.value.play().catch((error) => {
+      console.log('Autoplay blocked:', error)
+    })
+  }
+  isPlaying.value = !isPlaying.value
+}
+
 onMounted(() => {
   AOS.init({ duration: 1000, once: false, offset: 50 })
 })
@@ -127,6 +144,56 @@ onMounted(() => {
       </section>
     </div>
 
+    <audio ref="audioRef" loop>
+      <source src="/morning-light-ambient-acoustic-guitar-background-music-for-videos-5712.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button
+      @click="toggleMusic"
+      class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 border-2 border-white"
+      :class="isPlaying ? 'bg-secondary text-white animate-spin-slow' : 'bg-white text-secondary'"
+      title="Music On/Off"
+    >
+      <svg
+        v-if="isPlaying"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+        />
+      </svg>
+
+      <svg
+        v-else
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+          stroke-miterlimit="10"
+        />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+        />
+      </svg>
+    </button>
+
     <footer class="text-center py-8 text-gray-400 text-sm relative z-10">
       Made with 💖 for Satchan
     </footer>
@@ -192,5 +259,17 @@ onMounted(() => {
     transform: translateY(110vh) translateX(25px) rotate(360deg);
     opacity: 0;
   }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
 }
 </style>
