@@ -63,7 +63,7 @@ onMounted(() => {
       </div>
 
       <div
-        class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce opacity-70"
+        class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce font-black"
       >
         <span class="text-xs tracking-widest text-secondary">SCROLL</span>
         <svg
@@ -115,7 +115,7 @@ onMounted(() => {
           </div>
 
           <div
-            class="bg-white p-2 shadow-xl rounded-lg transform rotate-[3deg] hover:rotate-0 transition-all duration-500 mt-12 hover:z-20 hover:scale-105"
+            class="bg-white p-2 shadow-xl rounded-lg transform rotate-[3deg] hover:rotate-0 transition-all duration-500 mt-4 hover:z-20 hover:scale-105"
             :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
             data-aos-delay="200"
           >
@@ -134,7 +134,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* เปลี่ยนเป็น Fixed เพื่อให้ซากุระร่วงตามเรามาตลอด */
 .sakura-container {
   position: fixed;
   top: 0;
@@ -155,7 +154,6 @@ onMounted(() => {
   animation: fall linear infinite;
 }
 
-/* เพิ่ม Variation ให้ดอกไม้มีหลายขนาด */
 .sakura:nth-child(2n) {
   width: 10px;
   height: 10px;
