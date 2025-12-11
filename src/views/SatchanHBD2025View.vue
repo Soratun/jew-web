@@ -6,16 +6,16 @@ import 'aos/dist/aos.css';
 interface Memory {
   id: number;
   image: string;
-  date: string; // เพิ่มวันที่แบบญี่ปุ่น
-  title: string;
   delay: number;
 }
 
 const memories = ref<Memory[]>([
-  { id: 1, image: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=800', date: '2023.04.15', title: 'First Date', delay: 0 },
-  { id: 2, image: 'https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?auto=format&fit=crop&w=800', date: '2023.12.25', title: 'Christmas', delay: 200 },
-  { id: 3, image: 'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=800', date: '2024.02.14', title: 'Valentine', delay: 100 },
-   // ใส่รูปเพิ่ม...
+  { id: 1, image: 'satchan/IMG_4536-2.jpg', delay: 0 },
+  { id: 2, image: 'satchan/DSC_8117-Enhanced-NR.jpg', delay: 200 },
+  { id: 3, image: 'satchan/IMG_5565.jpg', delay: 100 },
+  { id: 4, image: 'satchan/3S9A5052.jpg', delay: 300 },
+  { id: 5, image: 'satchan/sc1.jpg', delay: 400 },
+  { id: 6, image: 'satchan/sc2.jpg', delay: 500 },
 ]);
 
 onMounted(() => {
@@ -24,7 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-base-100 relative overflow-hidden font-sans">
+  <div class="min-h-screen bg-base-100 relative overflow-hidden font-sans" data-theme="sakura">
 
     <div class="sakura-container">
       <div class="sakura" v-for="n in 20" :key="n"></div>
@@ -49,17 +49,8 @@ onMounted(() => {
           :data-aos-delay="item.delay"
         >
           <figure class="px-3 pt-3">
-            <img :src="item.image" class="rounded-xl object-cover h-72 w-full grayscale hover:grayscale-0 transition-all duration-700" />
+            <img :src="item.image" class="rounded-xl object-cover h-auto w-full grayscale hover:grayscale-0 transition-all duration-700" />
           </figure>
-
-          <div class="card-body items-center text-center py-6">
-            <div class="badge badge-primary badge-outline mb-2">{{ item.date }}</div>
-            <h2 class="card-title text-gray-700 font-serif">{{ item.title }}</h2>
-
-            <div class="mt-2 w-8 h-8 rounded-full border-2 border-red-400 text-red-400 flex items-center justify-center text-xs font-bold opacity-60 transform rotate-12">
-              愛
-            </div>
-          </div>
         </div>
 
       </div>
@@ -68,7 +59,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* 🌸 CSS สำหรับกลีบซากุระร่วง */
 .sakura-container {
   position: absolute;
   top: 0;
@@ -76,7 +66,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  pointer-events: none; /* ไม่ให้บังการคลิก */
+  pointer-events: none;
 }
 
 .sakura {
@@ -84,17 +74,15 @@ onMounted(() => {
   top: -10%;
   width: 15px;
   height: 15px;
-  background: #ffb7c5; /* สีซากุระ */
-  border-radius: 100% 0 100% 0; /* ทรงกลีบดอกไม้ */
+  background: #ffb7c5;
+  border-radius: 100% 0 100% 0;
   opacity: 0.6;
   animation: fall linear infinite;
 }
 
-/* สร้างตำแหน่งแบบสุ่มด้วย nth-child (ตัวอย่างคร่าวๆ) */
 .sakura:nth-child(2n) { width: 10px; height: 10px; left: 20%; animation-duration: 10s; animation-delay: 1s; }
 .sakura:nth-child(3n) { width: 12px; height: 12px; left: 50%; animation-duration: 12s; animation-delay: 4s; }
 .sakura:nth-child(4n) { left: 80%; animation-duration: 8s; animation-delay: 2s; }
-/* ... เพิ่มได้ตามต้องการ ... */
 
 @keyframes fall {
   0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0.8; }
